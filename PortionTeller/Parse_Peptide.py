@@ -15,11 +15,26 @@ def parse_peaks_peptide(input_file, requested_aa, requested_peptide_amino_end_st
 
     header = True
 
-    unformatted_trypsinized_lab_assay_file = open('/Users/miltonandrews/desktop/Python_Output/pre_sorted_unformatted_Trypsinized_Lab_Assay.csv', 'w')
+    #   Start of section that looks for the directory ~/PortionTeller (where ~ stands for the home directory)
+    #   and if it can't find that home directory then it will create it.
+    home_directory = os.path.expanduser('~')
+    portionteller_home_path = home_directory + '/PortionTeller'
 
-    formatted_trypsinized_lab_assay_file = open('/Users/miltonandrews/desktop/Python_Output/pre_sorted_formatted_Trypsinized_Lab_Assay.csv', 'w')
+    if os.path.exists(portionteller_home_path) is False:
+        print('Making PortionTeller directory')
+        os.mkdir(portionteller_home_path)
 
-    SERIOHL_KILR_output_file = open('/Users/miltonandrews/desktop/Python_Output/SERIOHL_KILR_output_file.csv', 'w')
+    portionteller_output_path = portionteller_home_path + '/Output_Files'
+
+    if os.path.exists(portionteller_output_path) is False:
+        os.mkdir(portionteller_output_path)
+    #   End of section that looks for and if necessary makes the PortionTeller directory
+
+    unformatted_trypsinized_lab_assay_file = open(portionteller_output_path + '/pre_sorted_unformatted_Trypsinized_Lab_Assay.csv', 'w')
+
+    formatted_trypsinized_lab_assay_file = open(portionteller_output_path + '/pre_sorted_formatted_Trypsinized_Lab_Assay.csv', 'w')
+
+    SERIOHL_KILR_output_file = open(portionteller_output_path + '/SERIOHL_KILR_output_file.csv', 'w')
 
     with open(input_file, 'r') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
@@ -66,7 +81,7 @@ def parse_peaks_peptide(input_file, requested_aa, requested_peptide_amino_end_st
                                 for n in range(0,
                                         (requested_peptide_amino_end_start - location_of_modified_aa + 1)):
                                     formatted_aa_string = formatted_aa_string + '-'
-                                    unformatted_aa_string == unformatted_aa_string + ''
+                                    unformatted_aa_string = unformatted_aa_string + ''
                                 for n in range(0, location_of_modified_aa):
                                     formatted_aa_string = formatted_aa_string + peptide_sequence[n]
                             else:
@@ -100,16 +115,12 @@ def parse_peaks_peptide(input_file, requested_aa, requested_peptide_amino_end_st
                                     unformatted_trypsinized_lab_assay_file.write(unformatted_aa_string)
                                     unformatted_trypsinized_lab_assay_file.write('\n')
 
-                            home_directory = os.path.expanduser('~')
-                            kinatestid_home_path = home_directory + '/KINATESTID'
+                            portionteller_input_path = portionteller_home_path + '/Input_Files'
 
-                            if os.path.exists(kinatestid_home_path) is False:
-                                print('Making KINATESTID directory')
-                                os.mkdir(kinatestid_home_path)
+                            if os.path.exists(portionteller_input_path) is False:
+                                os.mkdir(portionteller_input_path)
 
-                            kinatestid_input_path = kinatestid_home_path + '/Input_Files'
-
-                            SERIOHL_KILR_Reference_File = kinatestid_input_path + '/SERIOHL-KILR_directory/SERIOHL-KILR_Reference_File.csv'
+                            SERIOHL_KILR_Reference_File = portionteller_input_path + '/SERIOHL-KILR_directory/SERIOHL-KILR_Reference_File.csv'
 
                             k = 0
                             with open(SERIOHL_KILR_Reference_File, 'r') as csv_file:

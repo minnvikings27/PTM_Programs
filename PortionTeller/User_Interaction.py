@@ -3,11 +3,28 @@ def gather_user_input():
 
     import customtkinter
 
+    modification_type = ['Phosphorylation (STY)', 'Oxidation (M)', 'Carbamidomethylation', 'Deamidation (NQ)',
+                         'Acetylation (Protein N-term)', 'Pyro-glu from Q-Q']
+
+    modified_amino_acid =  ['Tyrosine', 'Serine', 'Threonine', 'Methionine', 'Argenine', 'Glutamine', 'Alanine',
+                            'Cysteine', 'Aspartate', 'Glutamate', 'Phenylalanine', 'Glycine', 'Histidine',
+                            'Isoleucine', 'Lysine', 'Leucine', 'Asparagine', 'Proline', 'Valine', 'Tryptophan']
+
+    modifier = ['ABL', 'MER', 'TYRO3', 'CDK25', 'P25', 'P35']
+
+    amino_side_positions = ['-1', '-2', '-3', '-4', '-5', '-6', '-7', '-8', '-9', '-10', '-11', '-12', '-13', '-14',
+                            '-15', '-16', '-17', '-18', '-19', '-20']
+
+    carboxyl_side_positions = ['+1', '+2', '+3', '+4', '+5', '+6', '+7', '+8', '+9', '+10', '+11', '+12', '+13', '+14',
+                               '+15', '+16', '+17', '+18', '+19', '+20']
+
+    assay_type = ['Kalip', 'SERIOHL-KILR']
+
     customtkinter.set_appearance_mode('System')
     customtkinter.set_default_color_theme('blue')
     root = customtkinter.CTk()
     root.geometry('300x450')
-    root.title('KINATESTID 5.0')
+    root.title('PortionTeller 1.0')
 
     def modification_type_response(choice1):
         modification_type_response.req_ptm = choice1
@@ -79,62 +96,61 @@ def gather_user_input():
     def assign_requested_analysis_type(choice8):
         assign_requested_analysis_type.requested_analysis_type = choice8
 
-#    frame = customtkinter.CTkFrame(master=root)
-#    frame.pack(pady=20, padx=60, fill='both', expand=True)
-#    label = customtkinter.CTkLabel(master=frame, text='KINATESTID')
-#    label.pack(pady=12, padx=10)
+    modification_type_response.req_ptm = ''
+    amino_acid_type_response.req_aa = ''
+    assign_requested_kinase.requested_kinase = ''
+    assign_requested_control.requested_control = ''
+    assign_requested_replicate.requested_replicate = ''
+    assign_requested_amino_side_start.requested_amino_side_start = ''
+    assign_requested_carboxyl_side_start.requested_carboxyl_side_start = ''
+    assign_requested_analysis_type.requested_analysis_type = ''
 
-    optionmenu_1 = customtkinter.CTkOptionMenu(master=root, values=['Phosphorylation (STY)', 'Oxidation (M)',
-        'Carbamidomethylation', 'Deamidation (NQ)', 'Acetylation (Protein N-term)', 'Pyro-glu from Q-Q'],
+    optionmenu_1 = customtkinter.CTkOptionMenu(master=root, values=modification_type,
             command=modification_type_response)
     optionmenu_1.pack(pady=12, padx=10)
-    optionmenu_1.set('Phosphorylation (STY)')
+    optionmenu_1.set('Mod Type - Default Phosphorylation')
 
-    optionmenu_2 = customtkinter.CTkOptionMenu(master=root, values=['Tyrosine', 'Serine', 'Threonine', 'Methionine',
-        'Argenine', 'Glutamine', 'Alanine', 'Cysteine', 'Aspartate', 'Glutamate', 'Phenylalanine', 'Glycine',
-            'Histidine', 'Isoleucine', 'Lysine', 'Leucine', 'Asparagine', 'Proline', 'Valine', 'Tryptophan'],
+    optionmenu_2 = customtkinter.CTkOptionMenu(master=root, values=modified_amino_acid,
             command=amino_acid_type_response)
     # modification_type_response.req_ptm = customtkinter.StringVar(value='Phosphorylation (STY)')
     optionmenu_2.pack(pady=10, padx=10)
-    optionmenu_2.set('Tyrosine')
+    optionmenu_2.set('Modified AA - Default Serine')
 
-    optionmenu_3 = customtkinter.CTkOptionMenu(master=root, values=['ABL', 'MER', 'TYRO3' , 'CDK25', 'P25', 'P35'],
+    optionmenu_3 = customtkinter.CTkOptionMenu(master=root, values=modifier,
             command=assign_requested_kinase)
     # modification_type_response.req_ptm = customtkinter.StringVar(value='Phosphorylation (STY)')
     optionmenu_3.pack(pady=10, padx=10)
-    optionmenu_3.set('ABL')
+    optionmenu_3.set('Modifier - Default P25')
 
-    optionmenu_4 = customtkinter.CTkOptionMenu(master=root, values=['PLUS', 'MINUS'],
+    optionmenu_4 = customtkinter.CTkOptionMenu(master=root, values=['Yes', 'No'],
             command=assign_requested_control)
     # modification_type_response.req_ptm = customtkinter.StringVar(value='Phosphorylation (STY)')
     optionmenu_4.pack(pady=10, padx=10)
-    optionmenu_4.set('PLUS')
+    optionmenu_4.set('Screen Against Control?')
 
-    optionmenu_5 = customtkinter.CTkOptionMenu(master=root, values=['R0', 'R1', 'R2', 'R3', 'R4', 'R5'],
+    optionmenu_5 = customtkinter.CTkOptionMenu(master=root, values=['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
             command=assign_requested_replicate)
     # modification_type_response.req_ptm = customtkinter.StringVar(value='Phosphorylation (STY)')
     optionmenu_5.pack(pady=10, padx=10)
-    optionmenu_5.set('R0')
+    optionmenu_5.set('Replicate Number')
 
-    optionmenu_6 = customtkinter.CTkOptionMenu(master=root, values=['-1', '-2', '-3', '-4', '-5', '-6', '-7',
-        '-8', '-9', '-10', '-11', '-12', '-13', '-14', '-15', '-16', '-17', '-18', '-19', '-20'],
+    optionmenu_6 = customtkinter.CTkOptionMenu(master=root, values=amino_side_positions,
             command=assign_requested_amino_side_start)
     # modification_type_response.req_ptm = customtkinter.StringVar(value='Phosphorylation (STY)')
     optionmenu_6.pack(pady=10, padx=10)
-    optionmenu_6.set('-4')
+    optionmenu_6.set('N Side Positions - Default -4')
 
-    optionmenu_7 = customtkinter.CTkOptionMenu(master=root, values=['+1', '+2', '+3', '+4', '+5', '+6', '+7',
-        '+8', '+9', '+10', '+11', '+12', '+13', '+14', '+15', '+16', '+17', '+18', '+19', '+20'],
+    optionmenu_7 = customtkinter.CTkOptionMenu(master=root, values=carboxyl_side_positions,
             command=assign_requested_carboxyl_side_start)
     # modification_type_response.req_ptm = customtkinter.StringVar(value='Phosphorylation (STY)')
     optionmenu_7.pack(pady=10, padx=10)
-    optionmenu_7.set('+4')
+    optionmenu_7.set('C Side Positions - Default +4')
 
-    optionmenu_8 = customtkinter.CTkOptionMenu(master=root, values=['Standard', 'SERIOHL-KILR'],
+    optionmenu_8 = customtkinter.CTkOptionMenu(master=root, values=assay_type,
             command=assign_requested_analysis_type)
     # modification_type_response.req_ptm = customtkinter.StringVar(value='Phosphorylation (STY)')
     optionmenu_8.pack(pady=10, padx=10)
-    optionmenu_8.set('Standard')
+    optionmenu_8.set('Assay - Default Kalip')
 
 
     # req_left_pep_start = customtkinter.StringVar()
@@ -154,6 +170,26 @@ def gather_user_input():
     # checkbox.pack(pady=12, padx=10)
 
     root.mainloop()
+
+    if modification_type_response.req_ptm == '':
+        modification_type_response.req_ptm = 'P'
+    if amino_acid_type_response.req_aa == '':
+        amino_acid_type_response.req_aa = 'S'
+    if assign_requested_kinase.requested_kinase == '':
+        assign_requested_kinase.requested_kinase = 'P25'
+    if assign_requested_control.requested_control == '':
+        assign_requested_control.requested_control = 'PLUS'
+    if assign_requested_control.requested_control == 'Yes':
+        assign_requested_control.requested_control = 'PLUS'
+    if assign_requested_replicate.requested_replicate == '':
+        assign_requested_replicate.requested_replicate = '0'
+    assign_requested_replicate.requested_replicate = 'R' + assign_requested_replicate.requested_replicate
+    if assign_requested_amino_side_start.requested_amino_side_start == '':
+        assign_requested_amino_side_start.requested_amino_side_start = '-4'
+    if assign_requested_carboxyl_side_start.requested_carboxyl_side_start == '':
+        assign_requested_carboxyl_side_start.requested_carboxyl_side_start = '+4'
+    if assign_requested_analysis_type.requested_analysis_type == '':
+        assign_requested_analysis_type.requested_analysis_type = 'Standard'
 
     return modification_type_response.req_ptm, \
                 amino_acid_type_response.req_aa, \

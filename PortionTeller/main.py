@@ -375,4 +375,3 @@ Zero_PTMs_File.close()
 One_PTM_File.close()
 Multiple_PTMs_File.close()
 requested_residue_unmodified_file.close()
-
