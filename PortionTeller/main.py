@@ -41,25 +41,26 @@ protein_accession_number = ''
 capture_all_ptms_in_line = ''
 PTM_Type = ''
 PTM_AA_location = ''
+neg_input_list = []
 
 header = True
 
 home_directory = os.path.expanduser('~')
-kinatestid_home_path = home_directory + '/KINATESTID'
+portionteller_home_path = home_directory + '/PortionTeller'
 
-if os.path.exists(kinatestid_home_path) is False:
-    print('Making KINATESTID directory')
-    os.mkdir(kinatestid_home_path)
+if os.path.exists(portionteller_home_path) is False:
+    print('Making PortionTeller directory')
+    os.mkdir(portionteller_home_path)
 
-kinatestid_input_path = kinatestid_home_path + '/Input_Files'
+portionteller_input_path = portionteller_home_path + '/Input_Files'
 
-if os.path.exists(kinatestid_input_path) is False:
-    os.mkdir(kinatestid_input_path)
+if os.path.exists(portionteller_input_path) is False:
+    os.mkdir(portionteller_input_path)
 
-kinatestid_output_path = kinatestid_home_path + '/Output_Files'
+portionteller_output_path = portionteller_home_path + '/Output_Files'
 
-if os.path.exists(kinatestid_output_path) is False:
-    os.mkdir(kinatestid_output_path)
+if os.path.exists(portionteller_output_path) is False:
+    os.mkdir(portionteller_output_path)
 
 user_input_data = gather_user_input()
 
@@ -72,15 +73,48 @@ requested_peptide_amino_end_start = abs(int(user_input_data[5]))
 requested_peptide_carboxyl_end_finish = int(user_input_data[6])
 requested_analysis_type = user_input_data[7]
 
-Zero_PTMs_File = open(kinatestid_output_path +'/Zero_PTMs', 'w')
-One_PTM_File = open(kinatestid_output_path +'/One_PTM', 'w')
-Multiple_PTMs_File = open(kinatestid_output_path +'/Multiple_PTMs', 'w')
-requested_residue_unmodified_file = open(kinatestid_output_path +'/Unphosphorylated_Tyrosines.csv', 'w')
-kinase_files_string = '/' + requested_kinase + '_' + requested_control + '_' + requested_replicate + '_'
-peaks_file = kinatestid_input_path + kinase_files_string + 'protein-peptides.csv'
-fasta_file = kinatestid_output_path +'/FASTA_File.csv'
-trypsinized_assay_file = kinatestid_output_path + '/Trypsinized_UniProt.csv'
+Zero_PTMs_File = open(portionteller_output_path +'/Zero_PTMs', 'w')
+One_PTM_File = open(portionteller_output_path +'/One_PTM', 'w')
+Multiple_PTMs_File = open(portionteller_output_path +'/Multiple_PTMs', 'w')
+requested_residue_unmodified_file = open(portionteller_output_path +'/Unphosphorylated_Tyrosines.csv', 'w')
+portionteller_files_string = '/' + requested_kinase + '_' + requested_control + '_' + requested_replicate + '_'
+pos_peaks_file = portionteller_input_path + portionteller_files_string + 'protein-peptides.csv'
+fasta_file = portionteller_output_path +'/FASTA_File.csv'
+trypsinized_assay_file = portionteller_output_path + '/Trypsinized_UniProt.csv'
+screened_peaks_file = portionteller_output_path +'/Screened_PEAKS_File.csv'
 
+if requested_control == 'PLUS':
+    neg_portionteller_files_string = '/' + requested_kinase + '/' + requested_kinase + '_MINUS_' + requested_replicate + '_'
+    neg_peaks_file = portionteller_input_path + neg_portionteller_files_string + 'protein-peptides.csv'
+    pos_portionteller_files_string = '/' + requested_kinase + '/' + requested_kinase + '_MINUS_' + requested_replicate + '_'
+    pos_peaks_file = portionteller_input_path + pos_portionteller_files_string + 'protein-peptides.csv'
+
+with open(neg_peaks_file, 'r') as csv_file:
+    csv_reader = csv.reader(csv_file, delimiter=',')
+    for neg_input_row in csv_reader:
+        neg_input_list.append(neg_input_row[3])
+
+with open(screened_peaks_file,'w') as screened_peaks_file:
+    with open(pos_peaks_file, 'r') as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',')
+        for pos_input_row in csv_reader:
+            # print(pos_input_row[3])
+            # print(neg_input_list[3])
+            if pos_input_row[3] not in neg_input_list[3]:
+                screened_peaks_file.print(pos_input_row)
+
+"""
+
+formatted_peptide_sequence = [*set(formatted_peptide_sequence)]
+
+output_file = '/Users/miltonandrews/desktop/Python_Output/CDK2_P25_Trypsinized_Lab_Assay.csv'
+
+with open(output_file, 'w') as csv_file:
+    for i in range(0, len(formatted_peptide_sequence)):
+        csv_file.write(formatted_peptide_sequence[i])
+        csv_file.write('\n')
+
+"""
 
 # Specify path
 # path = '/home/User/Desktop/file.txt'
@@ -106,7 +140,7 @@ for i in range(0, matrix_width):
 graph_y_axis_label = 'ACDEFGHIKLMNPQRSTVWY'
 
 # Create File That Will Store Accession Numbers
-accession_numbers_file = create_accession_numbers_file(peaks_file)
+accession_numbers_file = create_accession_numbers_file(pos_peaks_file)
 
 # Update FASTA reference file from UniProt as needed
 # The FASTA reference file is a local repository of FASTA data referenced by accession number
@@ -246,7 +280,7 @@ with open('/Users/miltonandrews/desktop/Python_Test_Data/MER_PLUS_R1_protein-pep
             capture_all_ptms_in_line = ''
 
 requested_peptide_amino_end_start_peptide_string = \
-    parse_peaks_peptide(peaks_file, requested_aa, requested_peptide_amino_end_start,
+    parse_peaks_peptide(pos_peaks_file, requested_aa, requested_peptide_amino_end_start,
                         requested_peptide_carboxyl_end_finish, requested_analysis_type)
 
 formatted_peptide_sequence = []
