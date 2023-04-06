@@ -5,17 +5,20 @@
 
 # More Comments
 
-
-
 import csv
 import numpy as np
 import os
+import pandas as pd
+import html5lib
+import webbrowser
 
 from Parse_Peptide import parse_peaks_peptide
 from UniProt_Data_Modifications import create_accession_numbers_file, modify_fasta_reference_file, \
     determine_uniprot_aa_placement, trypsinize_uniprot_string
 from User_Interaction import gather_user_input
 from Visualizations import generate_heatmap
+from HTML_Page_Builder import build_html_page
+
 
 zero_ptms_count = 0
 one_ptm_count = 0
@@ -45,6 +48,16 @@ neg_input_list = []
 
 header = True
 
+
+
+build_html_page()
+
+home_directory = os.path.expanduser('~')
+ppt_html_page = home_directory + '/Proportion_Teller/Input_Files/User_Input/PortionTeller_User_Input.html'
+ppt_html_page = 'file:' + ppt_html_page
+
+webbrowser.open(ppt_html_page)
+
 home_directory = os.path.expanduser('~')
 portionteller_home_path = home_directory + '/PortionTeller'
 
@@ -67,7 +80,10 @@ user_input_data = gather_user_input()
 requested_ptm = user_input_data[0]
 requested_aa = user_input_data[1]
 requested_kinase = user_input_data[2]
-requested_control = user_input_data[3]
+if user_input_data[3] == 'No':
+    requested_control = 'PLUS'
+else:
+    requested_control = 'MINUS'
 requested_replicate = user_input_data[4]
 requested_peptide_amino_end_start = abs(int(user_input_data[5]))
 requested_peptide_carboxyl_end_finish = int(user_input_data[6])
@@ -84,16 +100,28 @@ trypsinized_assay_file = portionteller_output_path + '/Trypsinized_UniProt.csv'
 screened_peaks_file = portionteller_output_path +'/Screened_PEAKS_File.csv'
 
 if requested_control == 'PLUS':
-    neg_portionteller_files_string = '/' + requested_kinase + '/' + requested_kinase + '_MINUS_' + requested_replicate + '_'
+    neg_portionteller_files_string = '/' + requested_kinase + '/' + requested_kinase + '_PLUS_' + requested_replicate + '_'
     neg_peaks_file = portionteller_input_path + neg_portionteller_files_string + 'protein-peptides.csv'
-    pos_portionteller_files_string = '/' + requested_kinase + '/' + requested_kinase + '_MINUS_' + requested_replicate + '_'
+    pos_portionteller_files_string = '/' + requested_kinase + '/' + requested_kinase + '_PLUS_' + requested_replicate + '_'
     pos_peaks_file = portionteller_input_path + pos_portionteller_files_string + 'protein-peptides.csv'
 
+
+
+
+
+
+
+
+
+""""
 with open(neg_peaks_file, 'r') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     for neg_input_row in csv_reader:
         neg_input_list.append(neg_input_row[3])
 
+"""
+
+"""
 with open(screened_peaks_file,'w') as screened_peaks_file:
     with open(pos_peaks_file, 'r') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
@@ -102,6 +130,9 @@ with open(screened_peaks_file,'w') as screened_peaks_file:
             # print(neg_input_list[3])
             if pos_input_row[3] not in neg_input_list[3]:
                 screened_peaks_file.print(pos_input_row)
+
+"""
+
 
 """
 

@@ -93,8 +93,10 @@ def gather_user_input():
         assign_requested_amino_side_start.requested_amino_side_start = int(choice6)
     def assign_requested_carboxyl_side_start(choice7):
         assign_requested_carboxyl_side_start.requested_carboxyl_side_start = int(choice7)
-    def assign_requested_analysis_type(choice8):
-        assign_requested_analysis_type.requested_analysis_type = choice8
+    def assign_requested_carboxyl_side_start(choice8):
+        assign_requested_carboxyl_side_start.requested_carboxyl_side_start = choice8
+    def assign_requested_analysis_type(choice9):
+        assign_requested_analysis_type.requested_analysis_type = choice9
 
     modification_type_response.req_ptm = ''
     amino_acid_type_response.req_aa = ''

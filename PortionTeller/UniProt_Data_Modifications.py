@@ -56,6 +56,8 @@ def create_accession_numbers_file(input_file):
 
     prior_protein_accession_number = ''
 
+    # input_file = '/Users/miltonandrews/PortionTeller/Input_Files/TYRO3/TYRO3_PLUS_R1_protein-peptides.csv'
+
     with open(input_file) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         for row in csv_reader:

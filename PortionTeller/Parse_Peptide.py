@@ -36,6 +36,8 @@ def parse_peaks_peptide(input_file, requested_aa, requested_peptide_amino_end_st
 
     SERIOHL_KILR_output_file = open(portionteller_output_path + '/SERIOHL_KILR_output_file.csv', 'w')
 
+    # input_file = '/Users/miltonandrews/PortionTeller/Input_Files/TYRO3/TYRO3_PLUS_R1_protein-peptides.csv'
+
     with open(input_file, 'r') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         for row in csv_reader:
