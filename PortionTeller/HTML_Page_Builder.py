@@ -1,46 +1,48 @@
+amino_acids_list = ['Tyrosine', 'Serine', 'Threonine', 'Alanine', 'Arginine', 'Asparagine', 'Aspartate',
+                    'Cysteine', 'Glutamate', 'Glutamine', 'Glycine', 'Histidine', 'Isoleucine', 'Leucine',
+                    'Lysine', 'Methionine', 'Phenylalanine', 'Proline', 'Tryptophan', 'Valine']
+
+amino_acids_one_letter_list = ['Y', 'S', 'T', 'A', 'R', 'N', 'D', 'C', 'E', 'Q', 'G', 'H', 'I', 'L', 'K',
+                               'M', 'F', 'P', 'W', 'V']
+
+
 def build_html_page():
 
     import os
-
     from get_modification_types import gather_ptm_reactions
 
     i = 0
     j = 0
 
-    # ptm_reactions = []
+    # ptm_modifier_input = []
+
+    # current_ptm = []
 
     ptm_modifiers = []
 
-    current_ptm = []
+    home_directory = os.path.expanduser('~') + '/Proportion_Teller'
 
-    ptm_modifiers_2 = []
-
-    amino_acids_list = ['Tyrosine', 'Serine', 'Threonine', 'Alanine', 'Arginine', 'Asparagine', 'Aspartatic Acid', \
-                        'Cysteine', 'Glutamic Acid', 'Glutamine', 'Glycine', 'Histidine', 'Isoleucine', 'Leucine', \
-                        'Lysine', 'Methionine', 'Phenylalanine', 'Proline', 'Tryptophan', 'Valine']
-
-    ptm_reactions = gather_ptm_reactions()
-
-    input_path = os.path.expanduser('~') + '/Proportion_Teller/Input_Files/User_Input/'
+    input_path = home_directory + '/Input_Files/'
 
     ptm_modifier_file = input_path + 'PTM_Modifiers.txt'
 
-    with open(ptm_modifier_file) as f:
-        ptm_modifiers = f.readlines()
+    proportion_teller_html_path = home_directory + '/HTML_Files/'
 
-    # print the list
-    print(ptm_modifiers)
+    ptm_reactions = gather_ptm_reactions()
+
+    with open(ptm_modifier_file) as f:
+        ptm_modifier_input = f.readlines()
 
     # remove new line characters
-    ptm_modifiers = [x.strip() for x in ptm_modifiers]
+    ptm_modifier_input = [x.strip() for x in ptm_modifier_input]
 
-    for i in range (0, len(ptm_modifiers)):
-        current_ptm = ptm_modifiers[i]
+    for i in range (0, len(ptm_modifier_input)):
+        current_ptm = ptm_modifier_input[i]
         if current_ptm[0] != '#':
-            ptm_modifiers_2.append(ptm_modifiers[i])
-    print(ptm_modifiers_2)
+            ptm_modifiers.append(ptm_modifier_input[i])
+    # print(ptm_modifiers)
 
-    ppt_html_page = input_path + 'PortionTeller_User_Input.html'
+    ppt_html_page = proportion_teller_html_path + 'ProportionTeller_User_Input.html'
     ppt_html_file = open(ppt_html_page, 'w')
 
     ppt_html_file.write('<html>\n')
@@ -59,7 +61,7 @@ def build_html_page():
 
 
     ppt_html_file.write('<div.fixed {\n')
-    ppt_html_file.write('style = \"position:fixed; left:100px; top:300px; color: yellow\">\n')
+    ppt_html_file.write('style = \"position:fixed; left:100px; top:150px; color: yellow\">\n')
     ppt_html_file.write('</div>\n')
 
     ppt_html_file.write('<label> Modified amino acid(s) </label> <br>\n')
@@ -70,7 +72,19 @@ def build_html_page():
         ppt_html_file.write('<br>\n')
 
     ppt_html_file.write('<div.fixed {\n')
-    ppt_html_file.write('style = \"position:fixed; left:100px; top:100px;\">\n')
+    ppt_html_file.write('style = \"position:fixed; left:350px; top:150px;\">\n')
+    ppt_html_file.write('</div>\n')
+    ppt_html_file.write('<label> PTM Reaction(s) </label> <br>\n')
+
+    for i in range(0,len(ptm_reactions)):
+        ppt_html_file.write('<input type = \"checkbox\" id = \"' + ptm_reactions[i] + '\" name = \"' +
+                            ptm_reactions[i] + '\" value = \"' + ptm_reactions[i] + '\">\n')
+        ppt_html_file.write('<label for=\"' + ptm_reactions[i] + '\">' + ptm_reactions[i] + '</label>\n')
+        ppt_html_file.write('<br>\n')
+
+
+    ppt_html_file.write('<div.fixed {\n')
+    ppt_html_file.write('style = \"position:fixed; left:600px; top:150px;\">\n')
     ppt_html_file.write('</div>\n')
     ppt_html_file.write('<label for=\"amino_side_location\"> Amino Side Location:</label>\n')
     ppt_html_file.write('<select name = \"amino_side_location\" id=\"amino_side_location\">\n')
@@ -81,7 +95,7 @@ def build_html_page():
     ppt_html_file.write('</select>\n')
 
     ppt_html_file.write('<div.fixed {\n')
-    ppt_html_file.write('style = \"position:fixed; left:500px; top:100px;\">\n')
+    ppt_html_file.write('style = \"position:fixed; left:850px; top:150px;\">\n')
     ppt_html_file.write('</div>\n')
     ppt_html_file.write('<label for=\"carboxyl_side_location\"> Carboxyl Side Location:</label>\n')
     ppt_html_file.write('<select name = \"carboxyl_side_location\" id=\"carboxyl_side_location\">\n')
@@ -91,203 +105,122 @@ def build_html_page():
     ppt_html_file.write('</select>\n')
 
     ppt_html_file.write('<div.fixed {\n')
-    ppt_html_file.write('style = \"position:fixed; left:500px; top:300px;\">\n')
+    ppt_html_file.write('style = \"position:fixed; left:1100px; top:150px;\">\n')
     ppt_html_file.write('</div>\n')
+    ppt_html_file.write('<label for=\"a_score_cutoff\"> A Score Cutoff:</label>\n')
+    ppt_html_file.write('<select name = \"a_score_cutoff\" id=\"a_score_cutoff\">\n')
 
-    ppt_html_file.write('<label> PTM Reaction(s) </label> <br>\n')
+    for i in range(0,21):
+        j = 5 * i
+        ppt_html_file.write('<option value = \"' + str(j) + '\">' + str(j) + '</option>\n')
+    ppt_html_file.write('</select>\n')
 
-    for i in range(0,len(ptm_reactions)):
-        ppt_html_file.write('<input type = \"checkbox\" id = \"' + ptm_reactions[i] + '\" name = \"' +
-                            ptm_reactions[i] + '\" value = \"' + ptm_reactions[i] + '\">\n')
-        ppt_html_file.write('<label for=\"' + ptm_reactions[i] + '\">' + ptm_reactions[i] + '</label>\n')
-        ppt_html_file.write('<br>\n')
+
+
+    ppt_html_file.write('<div.fixed {\n')
+    ppt_html_file.write('style = \"position:fixed; left:1300px; top:150px;\">\n')
+    ppt_html_file.write('</div>\n')
+    ppt_html_file.write('<label for=\"ptm_modifier\"> PTM Modifier:</label>\n')
+    ppt_html_file.write('<select name = \"ptm_modifier\" id=\"ptm_modifier\">\n')
+
+    for i in range(0,len(ptm_modifiers)):
+        ppt_html_file.write('<option value = \"' + ptm_modifiers[i] + '\">' + ptm_modifiers[i] + '</option>\n')
+    ppt_html_file.write('</select>\n')
 
     ppt_html_file.write('</body>\n')
 
+    ppt_html_file.write('<div.fixed {\n')
+    ppt_html_file.write('style = \"position:fixed; left:800px; top:800px;\">\n')
+    ppt_html_file.write('</div>\n')
+
+    ppt_html_file.write('<button id =\"submit\">Submit</button>')
+    ppt_html_file.write('<b id=\"submit\"></b>')
+
     ppt_html_file.write('<script>\n')
 
+    ppt_html_file.write('const x = document.getElementById(\"submit\")\n')
 
+    ppt_html_file.write('const amino_acids = [];\n')
+
+    ppt_html_file.write('x.addEventListener(\"click\", getCheckboxValue)\n')
+
+    ppt_html_file.write('function getCheckboxValues() {\n')
+
+    ppt_html_file.write('var amino_acids = \"\";\n')
+    for i in range (0, len(amino_acids_list)):
+        ppt_html_file.write('if (document.getElementById(\"' + amino_acids_list[i] + '\").checked === true) {\n')
+        ppt_html_file.write('amino_acids = amino_acids + \"' + amino_acids_one_letter_list[i] + '\";\n')
+        ppt_html_file.write('}\n')
+
+    ppt_html_file.write('var e = document.getElementById(\"ptm-reaction\");\n');
+    ppt_html_file.write('var value = e.value;\n')
+    ppt_html_file.write('var ptm_reaction_type = e.options[e.selectedIndex].text;\n')
+
+    ppt_html_file.write('var e = document.getElementById(\"modification_type\");\n')
+    ppt_html_file.write('var value = e.value;\n')
+    ppt_html_file.write('var modification_type = e.options[e.selectedIndex].text;\n')
+
+    ppt_html_file.write('var e = document.getElementById(\"amino_side_location\");\n')
+    ppt_html_file.write('var value = e.value;\n')
+    ppt_html_file.write('var amino_side_location = e.options[e.selectedIndex].text;\n')
+
+    ppt_html_file.write('var e = document.getElementById(\"carboxyl_side_location\");\n')
+    ppt_html_file.write('var value = e.value;\n')
+    ppt_html_file.write('var carboxyl_side_location = e.options[e.selectedIndex].text;\n')
+
+    ppt_html_file.write('document.getElementById(\"submit\").innerHTML +=\n')
+    ppt_html_file.write('amino_acids + \",\" + ptm_reaction_type + \",\" + modification_type + \",\" + amino_side_location + \",\" + carboxyl_side_location;\n')
+
+    ppt_html_file.write('total_csv_data = amino_acids + \",\" + ptm_reaction_type + \",\" + modification_type + \",\" + amino_side_location + \",\" + carboxyl_side_location;\n')
+    ppt_html_file.write('var csv = total_csv_data;\n')
+
+    ppt_html_file.write('var data = new Blob([csv]);\n')
+    ppt_html_file.write('var a2 = document.getElementById("download_button");\n')
+    ppt_html_file.write('a2.href = URL.createObjectURL(data);\n')
+
+    ppt_html_file.write('let fileHandle;\n')
+    ppt_html_file.write('document.querySelector(\".html\").onclick = async () = > {\n')
+    ppt_html_file.write('[fileHandle] = await window.showOpenFilePicker();\n')
+
+    ppt_html_file.write('const file = await fileHandle.getFile();\n')
+    ppt_html_file.write('const content = await file.text();\n')
+
+    ppt_html_file.write('return content;\n')
+    ppt_html_file.write('};\n')
+
+
+    ppt_html_file.write('} / *END OF FUNCTION * /\n')
 
     ppt_html_file.write('</script>\n')
 
+    ppt_html_file.write('<a id = \"download_button\" download = \"Download.csv\" type = \"text/csv\" > Download CSV </a>\n')
+
+    # ppt_html_file.write('const amino_acids = []\n')
+
+    # ppt_html_file.write('x.addEventListener(\"click\", getCheckboxValue)\n')
+
+    # ppt_html_file.write('function getCheckboxValue() {\n')
 
     ppt_html_file.write('</html>\n')
 
     return()
 
-""""
+"""
 
-    < ! File
-    Name
-    Text
-    Entry
-    Box >
-    < div.fixed
-    {
-        style = "position:fixed; left:100px; top:100px; color: yellow" >
-                < / div >
+    # ppt_html_file.write('const x = document.getElementById(\"submit\")\n')
 
-                    PEAKS
-    file
-    name: < input
-    type = text >
-
-           <! PTM
-    Reaction
-    Name >
-    < div.fixed
-    {
-        style = "position:fixed; left:500px; top:100px;" >
-                < / div >
-
-                    < label
-    for ="ptm-reaction" > PTM Reaction:< / label >
-
-                                           < select
-    name = "ptm-reaction"
-    id = "ptm-reaction" >
-
-         < option
-    value = "ABL" > ABL < / option >
-                            < option
-    value = "CDK25" > CDK25 < / option >
-                                < option
-    value = "MER" > MER < / option >
-                            < option
-    value = "P25" > P25 < / option >
-                            < option
-    value = "P35" > P35 < / option >
-                            < option
-    value = "TYRO3" > TYRO3 < / option >
-
-                                < / select >
-
-                                    <! PTM
-    Type >
-    < div.fixed
-    {
-        style = "position:fixed; left:900px; top:100px;" >
-                < / div >
-
-                    < label
-    for ="modification_type" > Modification type:< / label >
-
-                                                     < select
-    name = "modification_type"
-    id = "modification_type" >
-
-         < option
-    value = "Phosphorylation_(STY)" > Phosphorylation(STY) < / option >
-                                                               < option
-    value = "Oxidation_(M)" > Oxidation(M) < / option >
-                                               < option
-    value = "Carbamidomethylation" > Carbamidomethylation < / option >
-                                                              < option
-    value = "Deamidation_(NQ)" > Deamidation(NQ) < / option >
-                                                     < option
-    value = "Acetylation_(Protein_N-term)" > Acetylation(Protein
-    N - term) < / option >
-                  < option
-    value = "Pyro-glu_from_Q-Q" > Pyro - glu
-    from Q
-
-    -Q < / option >
-
-           < / select >
+    var amino_acids = \"\";\n')
 
 
-                                  < div.fixed
-    {
-        style = "position:fixed; left:800px; top:800px;" >
-                < / div >
 
-                    < button
-    id = "submit" > Submit < / button >
 
-                               < b
-    id = "submit" > < / b >
 
-                        < script >
 
-                        const
-    x = document.getElementById("submit")
+    ppt_html_file.write('</script>\n')
 
-    const
-    amino_acids = [];
+    <script>
 
-    x.addEventListener("click", getCheckboxValue)
-
-    function
-    getCheckboxValue()
-    {
-
-        var
-    amino_acids = " ";
-
-    if (document.getElementById("tyrosine").checked === true)
-    {
-        amino_acids = amino_acids + "Y";
-    }
-    if (document.getElementById("serine").checked === true) {
-    amino_acids = amino_acids + "S";
-    }
-    if (document.getElementById("threonine").checked == = true) {
-    amino_acids = amino_acids + "T";
-    }
-    if (document.getElementById("alanine").checked == = true) {
-    amino_acids = amino_acids + "A";
-    }
-    if (document.getElementById("argenine").checked == = true) {
-    amino_acids = amino_acids + "R";
-    }
-    if (document.getElementById("asparagine").checked == = true) {
-    amino_acids = amino_acids + "N";
-    / * amino_acids.push("Asparagine"); * /
-    }
-    if (document.getElementById("aspartic_acid").checked == = true) {
-    amino_acids = amino_acids + "D";
-    }
-    if (document.getElementById("cysteine").checked == = true) {
-    amino_acids = amino_acids + "C";
-    }
-    if (document.getElementById("glutamic_acid").checked == = true) {
-    amino_acids = amino_acids + "E";
-    }
-    if (document.getElementById("glutamine").checked == = true) {
-    amino_acids = amino_acids + "Q";
-    }
-    if (document.getElementById("glycine").checked == = true) {
-    amino_acids = amino_acids + "G";
-    }
-    if (document.getElementById("histidine").checked == = true) {
-    amino_acids = amino_acids + "H";
-    }
-    if (document.getElementById("isoleucine").checked == = true) {
-    amino_acids = amino_acids + "I";
-    }
-    if (document.getElementById("leucine").checked == = true) {
-    amino_acids = amino_acids + "L";
-    }
-    if (document.getElementById("lysine").checked == = true) {
-    amino_acids = amino_acids + "K";
-    }
-    if (document.getElementById("methionine").checked == = true) {
-    amino_acids = amino_acids + "M";
-    }
-    if (document.getElementById("phenylalanine").checked == = true) {
-    amino_acids = amino_acids + "F";
-    }
-    if (document.getElementById("proline").checked == = true) {
-    amino_acids = amino_acids + "P";
-    }
-    if (document.getElementById("tryptophan").checked == = true) {
-    amino_acids = amino_acids + "W";
-    }
-    if (document.getElementById("valine").checked == = true) {
-    amino_acids = amino_acids + "V";
-    }
-
-    var e = document.getElementById("ptm-reaction");
+    var  e = document.getElementById("ptm-reaction");
     var value = e.value;
     var ptm_reaction_type = e.options[e.selectedIndex].text;
 
@@ -332,9 +265,7 @@ def build_html_page():
     document.querySelector('main').append(a);
     * /
 
-    } / *END
-    OF
-    FUNCTION * /
+    } / *END OF FUNCTION * /
 
     < / script >
 
@@ -347,7 +278,4 @@ def build_html_page():
             < / body >
 
                 < / html >
-
-
 """
-

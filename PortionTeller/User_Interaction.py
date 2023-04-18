@@ -1,7 +1,7 @@
 
 def gather_user_input():
 
-    import customtkinter
+    # import customtkinter
 
     modification_type = ['Phosphorylation (STY)', 'Oxidation (M)', 'Carbamidomethylation', 'Deamidation (NQ)',
                          'Acetylation (Protein N-term)', 'Pyro-glu from Q-Q']
@@ -27,6 +27,7 @@ def gather_user_input():
     root.title('PortionTeller 1.0')
 
     def modification_type_response(choice1):
+
         modification_type_response.req_ptm = choice1
         if modification_type_response.req_ptm == 'Phosphorylation (STY)':
             modification_type_response.req_ptm = 'P'

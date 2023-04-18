@@ -9,8 +9,8 @@ def gather_ptm_reactions():
 
     header = True
 
-    home_directory = os.path.expanduser('~')
-    ppt_html_file = home_directory + '/Proportion_Teller/Input_Files/User_Input/ABL_PLUS_R1_protein-peptides.csv'
+    home_directory = os.path.expanduser('~') + '/Proportion_Teller'
+    ppt_html_file = home_directory + '/Input_Files/ABL_PLUS_R1_protein-peptides.csv'
 
     with open(ppt_html_file) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')

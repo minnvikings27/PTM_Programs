@@ -48,62 +48,68 @@ neg_input_list = []
 
 header = True
 
+home_directory = os.path.expanduser('~') + '/Proportion_Teller'
 
+proportion_teller_html_path = home_directory + '/HTML_Files/'
+
+if os.path.exists(home_directory) is False:
+    os.mkdir(home_directory)
+
+if os.path.exists(proportion_teller_html_path) is False:
+    os.mkdir(proportion_teller_html_path)
+
+proportion_teller_input_path = home_directory + '/Input_Files'
+
+if os.path.exists(proportion_teller_input_path) is False:
+    os.mkdir(proportion_teller_input_path)
+
+proportion_teller_output_path = home_directory + '/Output_Files'
+
+if os.path.exists(proportion_teller_output_path) is False:
+    os.mkdir(proportion_teller_output_path)
+
+proportion_teller_reference_files_path = home_directory + '/Reference_Files'
+
+if os.path.exists(proportion_teller_reference_files_path) is False:
+    os.mkdir(proportion_teller_reference_files_path)
+
+
+
+ppt_html_page = proportion_teller_html_path + 'ProportionTeller_User_Input.html'
+ppt_html_page = 'file:' + ppt_html_page
 
 build_html_page()
 
-home_directory = os.path.expanduser('~')
-ppt_html_page = home_directory + '/Proportion_Teller/Input_Files/User_Input/PortionTeller_User_Input.html'
-ppt_html_page = 'file:' + ppt_html_page
-
 webbrowser.open(ppt_html_page)
 
-home_directory = os.path.expanduser('~')
-portionteller_home_path = home_directory + '/PortionTeller'
+# IGNORE THIS IN FAVOR OF NEW USER INTERFACE -    user_input_data = gather_user_input()
 
-if os.path.exists(portionteller_home_path) is False:
-    print('Making PortionTeller directory')
-    os.mkdir(portionteller_home_path)
+requested_ptm = 'P'
+requested_aa = 'S'
+requested_kinase = 'TYRO3'
+requested_replicate = 1
+requested_peptide_amino_end_start = -4
+requested_peptide_carboxyl_end_finish = 4
+requested_analysis_type = 'Kalip'
 
-portionteller_input_path = portionteller_home_path + '/Input_Files'
+Zero_PTMs_File = open(proportion_teller_output_path +'/Zero_PTMs', 'w')
+One_PTM_File = open(proportion_teller_output_path +'/One_PTM', 'w')
+Multiple_PTMs_File = open(proportion_teller_output_path +'/Multiple_PTMs', 'w')
+requested_residue_unmodified_file = open(proportion_teller_output_path +'/Unphosphorylated_Tyrosines.csv', 'w')
+proportion_teller_files_string = '/' + requested_kinase + '_' + 'N' + '_' + str(requested_replicate) + '_'
+pos_peaks_file = proportion_teller_input_path + proportion_teller_files_string + 'protein-peptides.csv'
+fasta_file = proportion_teller_reference_files_path +'/FASTA_File.csv'
+trypsinized_assay_file = proportion_teller_output_path + '/Trypsinized_UniProt.csv'
+screened_peaks_file = proportion_teller_output_path +'/Screened_PEAKS_File.csv'
 
-if os.path.exists(portionteller_input_path) is False:
-    os.mkdir(portionteller_input_path)
 
-portionteller_output_path = portionteller_home_path + '/Output_Files'
-
-if os.path.exists(portionteller_output_path) is False:
-    os.mkdir(portionteller_output_path)
-
-user_input_data = gather_user_input()
-
-requested_ptm = user_input_data[0]
-requested_aa = user_input_data[1]
-requested_kinase = user_input_data[2]
-if user_input_data[3] == 'No':
-    requested_control = 'PLUS'
-else:
-    requested_control = 'MINUS'
-requested_replicate = user_input_data[4]
-requested_peptide_amino_end_start = abs(int(user_input_data[5]))
-requested_peptide_carboxyl_end_finish = int(user_input_data[6])
-requested_analysis_type = user_input_data[7]
-
-Zero_PTMs_File = open(portionteller_output_path +'/Zero_PTMs', 'w')
-One_PTM_File = open(portionteller_output_path +'/One_PTM', 'w')
-Multiple_PTMs_File = open(portionteller_output_path +'/Multiple_PTMs', 'w')
-requested_residue_unmodified_file = open(portionteller_output_path +'/Unphosphorylated_Tyrosines.csv', 'w')
-portionteller_files_string = '/' + requested_kinase + '_' + requested_control + '_' + requested_replicate + '_'
-pos_peaks_file = portionteller_input_path + portionteller_files_string + 'protein-peptides.csv'
-fasta_file = portionteller_output_path +'/FASTA_File.csv'
-trypsinized_assay_file = portionteller_output_path + '/Trypsinized_UniProt.csv'
-screened_peaks_file = portionteller_output_path +'/Screened_PEAKS_File.csv'
+requested_control = 'MINUS'
 
 if requested_control == 'PLUS':
     neg_portionteller_files_string = '/' + requested_kinase + '/' + requested_kinase + '_PLUS_' + requested_replicate + '_'
-    neg_peaks_file = portionteller_input_path + neg_portionteller_files_string + 'protein-peptides.csv'
+    neg_peaks_file = proportion_teller_input_path + neg_portionteller_files_string + 'protein-peptides.csv'
     pos_portionteller_files_string = '/' + requested_kinase + '/' + requested_kinase + '_PLUS_' + requested_replicate + '_'
-    pos_peaks_file = portionteller_input_path + pos_portionteller_files_string + 'protein-peptides.csv'
+    pos_peaks_file = proportion_teller_input_path + pos_portionteller_files_string + 'protein-peptides.csv'
 
 
 
