@@ -163,11 +163,20 @@ with open(output_file, 'w') as csv_file:
 # print(home_directory)
 
 # Initialize Arrays With Sizes as Indicated by User Input for each of the 20 amino acids
+
+#CHANGE THESE WHEN FILE TRANSFER OF DATA IS COMPLETED
+requested_peptide_amino_end_start = 4
+requested_peptide_carboxyl_end_finish = 4
+central_aa = 'Y'
+
+
 matrix_width = requested_peptide_amino_end_start + requested_peptide_carboxyl_end_finish + 1
 Bayesian_Probablity_Matrix = [[0 for i in range(matrix_width)] for j in range(20)]
 Lab_Assay_Trypsinized_Probability_Matrix = [[0 for i in range(matrix_width)] for j in range(20)]
 UniProt_Trypsinized_Probability_Matrix = [[0 for i in range(matrix_width)] for j in range(20)]
 Sums_of_UniProt_Trypsinized_List = [0 for i in range(matrix_width)]
+
+
 
 # Set graph parameters that will remain constant throughout the program
 graph_font = 'Times New Roman'
@@ -182,6 +191,8 @@ accession_numbers_file = create_accession_numbers_file(pos_peaks_file)
 # Update FASTA reference file from UniProt as needed
 # The FASTA reference file is a local repository of FASTA data referenced by accession number
 modify_fasta_reference_file(accession_numbers_file)
+
+requested_ptm = 'P'
 
 if requested_ptm == 'P':
     ptm_name = 'Phosporylation'
@@ -214,6 +225,9 @@ UniProt_Trypsinized_Matrix = determine_uniprot_aa_placement(trypsinized_assay_fi
 for m in range(0, matrix_width):
     for n in range(0, 20):
         Sums_of_UniProt_Trypsinized_List[m] = Sums_of_UniProt_Trypsinized_List[m] + UniProt_Trypsinized_Matrix[n][m]
+
+
+
 
 for m in range(0, requested_peptide_amino_end_start):
     for n in range(0, 20):

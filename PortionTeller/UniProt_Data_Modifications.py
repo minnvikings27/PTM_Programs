@@ -9,12 +9,22 @@ def trypsinize_uniprot_string(requested_aa):
     # trypsin cleavage at the carboxylic end of whenever lysine or arginine residue is encounters.
 
     import csv
+    import os
 
     in_silico_peptide = ''
     requested_aa_found_in_peptide = False
 
-    with open('/Users/miltonandrews/desktop/Python_Output/Trypsinized_UniProt.csv', 'w') as trypsinized_fasta_file:
-        FASTA_File = '/Users/miltonandrews/desktop/Python_Output/FASTA_File.csv'
+    home_directory = os.path.expanduser('~') + '/Proportion_Teller'
+
+    reference_path = home_directory + '/Reference_Files/'
+
+    output_path = home_directory + '/Output_Files/'
+
+    FASTA_File = reference_path + 'FASTA_File.csv'
+
+    trypsinized_uniprot_file = output_path + 'Trypsinized_UniProt.csv'
+
+    with open(trypsinized_uniprot_file, 'w') as trypsinized_fasta_file:
         with open(FASTA_File,'r') as fasta_file:
             csv_reader = csv.reader(fasta_file, delimiter=',')
             for row in csv_reader:
@@ -75,8 +85,6 @@ def create_accession_numbers_file(input_file):
         current_file_name = list_of_all_files_in_dir[i]
         if current_file_name[-4] == '.' and current_file_name[-3] == 'c' and current_file_name[-2] == 's' and current_file_name[-1] == 'v':
             valid_csv_files.append(current_file_name)
-    print(valid_csv_files)
-
 
     for i in range(0, len(valid_csv_files)):
         input_file = input_path + '/' + valid_csv_files[i]
@@ -93,6 +101,7 @@ def create_accession_numbers_file(input_file):
                     unique_protein_accession_numbers.write(protein_accession_number)
                     unique_protein_accession_numbers.write('\n')
                     prior_protein_accession_number = protein_accession_number
+                print(protein_accession_number)
 
         unique_protein_accession_numbers.close()
 
@@ -135,6 +144,7 @@ def modify_fasta_reference_file(accession_numbers_file):
     with open(accession_numbers_file, 'r') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         for row in csv_reader:
+            print(row)
             protein_accession_number = row[0]
             if protein_accession_number not in fasta_dictionary:
                 uniprot_request_url = "http://www.uniprot.org/uniprot/"
@@ -160,6 +170,11 @@ def determine_uniprot_aa_placement(input_file, central_aa, requested_peptide_ami
     requested_peptide_carboxyl_end_finish):
 
     import csv
+
+    #CHANGE THESE WHEN FILE TRANSFER OF DATA IS COMPLETED
+    requested_peptide_amino_end_start = 4
+    requested_peptide_carboxyl_end_finish = 4
+    central_aa = 'Y'
 
     i = 0
 

@@ -42,7 +42,7 @@ def build_html_page():
             ptm_modifiers.append(ptm_modifier_input[i])
     # print(ptm_modifiers)
 
-    ppt_html_page = proportion_teller_html_path + 'ProportionTeller_User_Input.html'
+    ppt_html_page = proportion_teller_html_path + 'Proportion_Teller_User_Input.html'
     ppt_html_file = open(ppt_html_page, 'w')
 
     ppt_html_file.write('<html>\n')

@@ -18,25 +18,25 @@ def parse_peaks_peptide(input_file, requested_aa, requested_peptide_amino_end_st
     #   Start of section that looks for the directory ~/PortionTeller (where ~ stands for the home directory)
     #   and if it can't find that home directory then it will create it.
     home_directory = os.path.expanduser('~')
-    portionteller_home_path = home_directory + '/PortionTeller'
+    proportionteller_home_path = home_directory + '/Proportion_Teller'
 
-    if os.path.exists(portionteller_home_path) is False:
+    if os.path.exists(proportionteller_home_path) is False:
         print('Making PortionTeller directory')
-        os.mkdir(portionteller_home_path)
+        os.mkdir(proportionteller_home_path)
 
-    portionteller_output_path = portionteller_home_path + '/Output_Files'
+    proportionteller_output_path = proportionteller_home_path + '/Output_Files'
 
-    if os.path.exists(portionteller_output_path) is False:
-        os.mkdir(portionteller_output_path)
+    if os.path.exists(proportionteller_output_path) is False:
+        os.mkdir(proportionteller_output_path)
     #   End of section that looks for and if necessary makes the PortionTeller directory
 
-    unformatted_trypsinized_lab_assay_file = open(portionteller_output_path + '/pre_sorted_unformatted_Trypsinized_Lab_Assay.csv', 'w')
+    unformatted_trypsinized_lab_assay_file = open(proportionteller_output_path + '/pre_sorted_unformatted_Trypsinized_Lab_Assay.csv', 'w')
 
-    formatted_trypsinized_lab_assay_file = open(portionteller_output_path + '/pre_sorted_formatted_Trypsinized_Lab_Assay.csv', 'w')
+    formatted_trypsinized_lab_assay_file = open(proportionteller_output_path + '/pre_sorted_formatted_Trypsinized_Lab_Assay.csv', 'w')
 
-    SERIOHL_KILR_output_file = open(portionteller_output_path + '/SERIOHL_KILR_output_file.csv', 'w')
+    SERIOHL_KILR_output_file = open(proportionteller_output_path + '/SERIOHL_KILR_output_file.csv', 'w')
 
-    # input_file = '/Users/miltonandrews/PortionTeller/Input_Files/TYRO3/TYRO3_PLUS_R1_protein-peptides.csv'
+    input_file = '/Users/miltonandrews/Proportion_Teller/Input_Files/ABL_PLUS_R1_protein-peptides.csv'
 
     with open(input_file, 'r') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
@@ -117,27 +117,27 @@ def parse_peaks_peptide(input_file, requested_aa, requested_peptide_amino_end_st
                                     unformatted_trypsinized_lab_assay_file.write(unformatted_aa_string)
                                     unformatted_trypsinized_lab_assay_file.write('\n')
 
-                            portionteller_input_path = portionteller_home_path + '/Input_Files'
+                            proportionteller_input_path = proportionteller_home_path + '/Input_Files'
 
-                            if os.path.exists(portionteller_input_path) is False:
-                                os.mkdir(portionteller_input_path)
+                            if os.path.exists(proportionteller_input_path) is False:
+                                os.mkdir(proportionteller_input_path)
 
-                            SERIOHL_KILR_Reference_File = portionteller_input_path + '/SERIOHL-KILR_directory/SERIOHL-KILR_Reference_File.csv'
+                            # SERIOHL_KILR_Reference_File = proportionteller_input_path + '/SERIOHL-KILR_directory/SERIOHL-KILR_Reference_File.csv'
 
-                            k = 0
-                            with open(SERIOHL_KILR_Reference_File, 'r') as csv_file:
-                                csv_reader = csv.reader(csv_file, delimiter=',')
-                                for sk_row in csv_reader:
-                                    k += 1
-                                    if k > 2:
-                                        # seriohl_kilr_peptide_string.write(row[2])
-                                        if unformatted_aa_string in sk_row[11]:
-                                            SERIOHL_KILR_output_file.write(unformatted_aa_string)
-                                            SERIOHL_KILR_output_file.write(',')
-                                            SERIOHL_KILR_output_file.write(sk_row[11])
-                                            SERIOHL_KILR_output_file.write(',')
-                                            SERIOHL_KILR_output_file.write(sk_row[2])
-                                            SERIOHL_KILR_output_file.write('\n')
+                            # k = 0
+                            # with open(SERIOHL_KILR_Reference_File, 'r') as csv_file:
+                            #     csv_reader = csv.reader(csv_file, delimiter=',')
+                            #     for sk_row in csv_reader:
+                            #         k += 1
+                            #        if k > 2:
+                            #            # seriohl_kilr_peptide_string.write(row[2])
+                            #             if unformatted_aa_string in sk_row[11]:
+                            #                 SERIOHL_KILR_output_file.write(unformatted_aa_string)
+                            #                 SERIOHL_KILR_output_file.write(',')
+                            #                 SERIOHL_KILR_output_file.write(sk_row[11])
+                            #                 SERIOHL_KILR_output_file.write(',')
+                            #                 SERIOHL_KILR_output_file.write(sk_row[2])
+                            #                 SERIOHL_KILR_output_file.write('\n')
 
                             PTM_AA_location = ''
 
