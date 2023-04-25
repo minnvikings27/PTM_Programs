@@ -1,8 +1,5 @@
 total_AA_in_UniProt_Data = [0]
 
-AA_list = ['A', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'Y']
-
-
 def trypsinize_uniprot_string(requested_aa):
 
     # This function uses FASTA data that was already pulled down from the UniProt database and does an artificial
@@ -89,6 +86,8 @@ def create_accession_numbers_file(input_file):
     for i in range(0, len(valid_csv_files)):
         input_file = input_path + '/' + valid_csv_files[i]
 
+
+
         with open(input_file) as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=',')
             for row in csv_reader:
@@ -166,15 +165,15 @@ def modify_fasta_reference_file(accession_numbers_file):
     return fasta_file
 
 
-def determine_uniprot_aa_placement(input_file, central_aa, requested_peptide_amino_end_start,
+def determine_uniprot_aa_placement(AA_list, input_file, central_aa, requested_peptide_amino_end_start,
     requested_peptide_carboxyl_end_finish):
 
     import csv
 
     #CHANGE THESE WHEN FILE TRANSFER OF DATA IS COMPLETED
-    requested_peptide_amino_end_start = 4
-    requested_peptide_carboxyl_end_finish = 4
-    central_aa = 'Y'
+    # requested_peptide_amino_end_start = 4
+    # requested_peptide_carboxyl_end_finish = 4
+    # central_aa = 'Y'
 
     i = 0
 

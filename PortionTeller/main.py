@@ -45,6 +45,21 @@ capture_all_ptms_in_line = ''
 PTM_Type = ''
 PTM_AA_location = ''
 neg_input_list = []
+AA_list = []
+
+# In alphabetical order
+AA_alpha_list = ['A', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'Y']
+
+# In hydrophobicity order
+AA_hydrophob_list = ['F', 'I', 'L', 'W', 'V', 'M', 'Y', 'C', 'A', 'T', 'H', 'G', 'S', 'Q', 'R', 'K', 'N', 'P', 'E', 'D']
+
+# By volume
+AA_by_volume_list = ['G', 'A', 'S', 'C', 'T', 'D', 'P', 'N', 'V', 'E', 'Q', 'H', 'L', 'I', 'K', 'M', 'F', 'Y', 'R', 'W']
+
+# By pKa
+AA_by_pKa_list = ['D', 'E', 'H', 'A', 'N', 'Q', 'G', 'I', 'L', 'M', 'F', 'P', 'S', 'T', 'W', 'V', 'C', 'K', 'Y', 'R']
+
+AA_list  = AA_by_pKa_list
 
 header = True
 
@@ -75,21 +90,41 @@ if os.path.exists(proportion_teller_reference_files_path) is False:
 
 
 
-ppt_html_page = proportion_teller_html_path + 'ProportionTeller_User_Input.html'
+ppt_html_page = proportion_teller_html_path + 'Proportion_Teller_User_Input.html'
 ppt_html_page = 'file:' + ppt_html_page
 
 build_html_page()
 
 webbrowser.open(ppt_html_page)
 
-# IGNORE THIS IN FAVOR OF NEW USER INTERFACE -    user_input_data = gather_user_input()
+ptm_modifier_file = proportion_teller_input_path + '/User_Response_File.txt'
 
-requested_ptm = 'P'
-requested_aa = 'S'
-requested_kinase = 'TYRO3'
+
+with open(ptm_modifier_file) as csv_file:
+    csv_reader = csv.reader(csv_file, delimiter=',')
+    for row in csv_reader:
+        requested_aa = row[0]
+        requested_ptm = row[1]
+        requested_peptide_amino_end_start = row[2]
+        requested_peptide_carboxyl_end_finish = row[3]
+        requested_a_score = row[4]
+        requested_kinase = row[5]
+
+        print(requested_aa)
+        print(requested_ptm)
+        print(requested_peptide_amino_end_start)
+        print(requested_peptide_carboxyl_end_finish)
+        print(requested_a_score)
+        print(requested_kinase)
+
+    # IGNORE THIS IN FAVOR OF NEW USER INTERFACE -    user_input_data = gather_user_input()
+
+# requested_ptm = 'P'
+# requested_aa = 'S'
+# requested_kinase = 'TYRO3'
 requested_replicate = 1
-requested_peptide_amino_end_start = -4
-requested_peptide_carboxyl_end_finish = 4
+# requested_peptide_amino_end_start = -4
+# requested_peptide_carboxyl_end_finish = 4
 requested_analysis_type = 'Kalip'
 
 Zero_PTMs_File = open(proportion_teller_output_path +'/Zero_PTMs', 'w')
@@ -171,7 +206,7 @@ central_aa = 'Y'
 
 
 matrix_width = requested_peptide_amino_end_start + requested_peptide_carboxyl_end_finish + 1
-Bayesian_Probablity_Matrix = [[0 for i in range(matrix_width)] for j in range(20)]
+Bayesian_Probability_Matrix = [[0 for i in range(matrix_width)] for j in range(20)]
 Lab_Assay_Trypsinized_Probability_Matrix = [[0 for i in range(matrix_width)] for j in range(20)]
 UniProt_Trypsinized_Probability_Matrix = [[0 for i in range(matrix_width)] for j in range(20)]
 Sums_of_UniProt_Trypsinized_List = [0 for i in range(matrix_width)]
@@ -183,7 +218,8 @@ graph_font = 'Times New Roman'
 graph_x_axis_label = [0 for i in range(matrix_width)]
 for i in range(0, matrix_width):
     graph_x_axis_label[i] = i - requested_peptide_amino_end_start
-graph_y_axis_label = 'ACDEFGHIKLMNPQRSTVWY'
+# graph_y_axis_label = 'ACDEFGHIKLMNPQRSTVWY'
+graph_y_axis_label = AA_list
 
 # Create File That Will Store Accession Numbers
 accession_numbers_file = create_accession_numbers_file(pos_peaks_file)
@@ -219,7 +255,7 @@ with open(fasta_file) as csv_file:
 # In silico trypsinize the FASTA file as needed
 trypsinize_uniprot_string(requested_aa)
 
-UniProt_Trypsinized_Matrix = determine_uniprot_aa_placement(trypsinized_assay_file, requested_aa,
+UniProt_Trypsinized_Matrix = determine_uniprot_aa_placement(AA_list, trypsinized_assay_file, requested_aa,
     requested_peptide_amino_end_start, requested_peptide_carboxyl_end_finish)
 
 for m in range(0, matrix_width):
@@ -243,7 +279,7 @@ graph_max = max_uniprot_trysinized_value
 # graph_max = 0.1
 generate_heatmap(UniProt_Trypsinized_Probability_Matrix, graph_max, graph_font, graph_title, graph_x_axis_label, graph_y_axis_label)
 
-Full_Proteins_Matrix = determine_uniprot_aa_placement(fasta_file, requested_aa,
+Full_Proteins_Matrix = determine_uniprot_aa_placement(AA_list, fasta_file, requested_aa,
     requested_peptide_amino_end_start, requested_peptide_carboxyl_end_finish)
 
 max_full_protein_value = np.amax(Full_Proteins_Matrix)
@@ -386,7 +422,7 @@ print("Percentage of Multiple PTMs = {0:.0%}".format(multiple_ptms_count/line_co
 
 Trypsinized_Lab_Assay_File = '/Users/miltonandrews/desktop/Python_Output/pre_sorted_Trypsinized_Lab_Assay.csv'
 
-Lab_Assay_Trypsinized_Matrix = determine_uniprot_aa_placement(Trypsinized_Lab_Assay_File, requested_aa,
+Lab_Assay_Trypsinized_Matrix = determine_uniprot_aa_placement(AA_list, Trypsinized_Lab_Assay_File, requested_aa,
     requested_peptide_amino_end_start, requested_peptide_carboxyl_end_finish)
 
 max_lab_trypsinized_value = np.amax(Lab_Assay_Trypsinized_Matrix)
@@ -439,22 +475,22 @@ for m in range(0, requested_peptide_amino_end_start):
     for n in range(0, 20):
         # if UniProt_Trypsinized_Probability_Matrix[n][m] == 0:
         #    UniProt_Trypsinized_Probability_Matrix[n][m] = 0.00001
-        Bayesian_Probablity_Matrix[n][m] = \
+        Bayesian_Probability_Matrix[n][m] = \
         ((Lab_Assay_Trypsinized_Probability_Matrix[n][m] * probability_central_aa_is_modified)/UniProt_Trypsinized_Probability_Matrix[n][m])
 for m in range(requested_peptide_amino_end_start + 1, matrix_width):
     for n in range(0, 20):
         # if UniProt_Trypsinized_Probability_Matrix[n][m] == 0:
         #    UniProt_Trypsinized_Probability_Matrix[n][m] = 0.00001
-        Bayesian_Probablity_Matrix[n][m] = \
+        Bayesian_Probability_Matrix[n][m] = \
         ((Lab_Assay_Trypsinized_Probability_Matrix[n][m] *
             probability_central_aa_is_modified)/UniProt_Trypsinized_Probability_Matrix[n][m])
 
-max_bayesian_value = np.amax(Bayesian_Probablity_Matrix)
+max_bayesian_value = np.amax(Bayesian_Probability_Matrix)
 
 graph_title = 'Bayesian Prob Matrix for Trypsinized Peptide - Using ' + requested_kinase + ' With ' + ptm_name + ' of ' + requested_aa
 graph_max = max_bayesian_value
 # graph_max = 0.015
-generate_heatmap(Bayesian_Probablity_Matrix, graph_max, graph_font, graph_title, graph_x_axis_label, graph_y_axis_label)
+generate_heatmap(Bayesian_Probability_Matrix, graph_max, graph_font, graph_title, graph_x_axis_label, graph_y_axis_label)
 
 Zero_PTMs_File.close()
 One_PTM_File.close()

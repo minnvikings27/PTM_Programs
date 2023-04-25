@@ -131,20 +131,26 @@ def build_html_page():
 
     ppt_html_file.write('<div.fixed {\n')
     ppt_html_file.write('style = \"position:fixed; left:800px; top:800px;\">\n')
-    ppt_html_file.write('</div>\n')
+    # ppt_html_file.write('</div>\n')
 
-    ppt_html_file.write('<button id =\"submit\">Submit</button>')
-    ppt_html_file.write('<b id=\"submit\"></b>')
+    # ppt_html_file.write('<button id =\"submit\">Submit</button>')
+    # ppt_html_file.write('<b id=\"submit\"></b>')
+
+    # ppt_html_file.write('<div>\n')
+
+    ppt_html_file.write('<input type=\"button\" id=\"bt\" value=\"Run Analysis\" onclick=\"saveFile()\"/>\n')
+
+    ppt_html_file.write('</div>\n')
 
     ppt_html_file.write('<script>\n')
 
-    ppt_html_file.write('const x = document.getElementById(\"submit\")\n')
+    # ppt_html_file.write('const x = document.getElementById(\"submit\")\n')
 
     ppt_html_file.write('const amino_acids = [];\n')
 
-    ppt_html_file.write('x.addEventListener(\"click\", getCheckboxValue)\n')
+    # ppt_html_file.write('x.addEventListener(\"click\", getCheckboxValue)\n')
 
-    ppt_html_file.write('function getCheckboxValues() {\n')
+    ppt_html_file.write('let saveFile = () => {\n')
 
     ppt_html_file.write('var amino_acids = \"\";\n')
     for i in range (0, len(amino_acids_list)):
@@ -152,13 +158,11 @@ def build_html_page():
         ppt_html_file.write('amino_acids = amino_acids + \"' + amino_acids_one_letter_list[i] + '\";\n')
         ppt_html_file.write('}\n')
 
-    ppt_html_file.write('var e = document.getElementById(\"ptm-reaction\");\n');
-    ppt_html_file.write('var value = e.value;\n')
-    ppt_html_file.write('var ptm_reaction_type = e.options[e.selectedIndex].text;\n')
-
-    ppt_html_file.write('var e = document.getElementById(\"modification_type\");\n')
-    ppt_html_file.write('var value = e.value;\n')
-    ppt_html_file.write('var modification_type = e.options[e.selectedIndex].text;\n')
+    ppt_html_file.write('var ptm_reaction_type = \"\";\n')
+    for i in range(0,len(ptm_reactions)):
+        ppt_html_file.write('if (document.getElementById(\"' + ptm_reactions[i] + '\").checked === true) {\n')
+        ppt_html_file.write('ptm_reaction_type = ptm_reaction_type + \"' + ptm_reactions[i] + '\";\n')
+        ppt_html_file.write('}\n')
 
     ppt_html_file.write('var e = document.getElementById(\"amino_side_location\");\n')
     ppt_html_file.write('var value = e.value;\n')
@@ -168,32 +172,54 @@ def build_html_page():
     ppt_html_file.write('var value = e.value;\n')
     ppt_html_file.write('var carboxyl_side_location = e.options[e.selectedIndex].text;\n')
 
-    ppt_html_file.write('document.getElementById(\"submit\").innerHTML +=\n')
-    ppt_html_file.write('amino_acids + \",\" + ptm_reaction_type + \",\" + modification_type + \",\" + amino_side_location + \",\" + carboxyl_side_location;\n')
+    ppt_html_file.write('var e = document.getElementById(\"a_score_cutoff\");\n')
+    ppt_html_file.write('var value = e.value;\n')
+    ppt_html_file.write('var a_score_cutoff = e.options[e.selectedIndex].text;\n')
 
-    ppt_html_file.write('total_csv_data = amino_acids + \",\" + ptm_reaction_type + \",\" + modification_type + \",\" + amino_side_location + \",\" + carboxyl_side_location;\n')
+    ppt_html_file.write('var e = document.getElementById(\"ptm_modifier\");\n')
+    ppt_html_file.write('var value = e.value;\n')
+    ppt_html_file.write('var ptm_modifier = e.options[e.selectedIndex].text;\n')
+
+    ppt_html_file.write('document.getElementById(\"bt\").innerHTML +=\n')
+    ppt_html_file.write('amino_acids + \",\" + ptm_reaction_type + \",\" + ptm_modifier + \",\" + amino_side_location + \",\" + a_score_cutoff + \",\" + carboxyl_side_location;\n')
+
+    ppt_html_file.write('total_csv_data = amino_acids + \",\" + ptm_reaction_type + \",\" + ptm_modifier + \",\" + amino_side_location + \",\" + a_score_cutoff + \",\" + carboxyl_side_location;\n')
     ppt_html_file.write('var csv = total_csv_data;\n')
 
-    ppt_html_file.write('var data = new Blob([csv]);\n')
-    ppt_html_file.write('var a2 = document.getElementById("download_button");\n')
-    ppt_html_file.write('a2.href = URL.createObjectURL(data);\n')
+    ppt_html_file.write('const textToBLOB = new Blob([csv], {type:\'text/plain\'});\n')
+    ppt_html_file.write('const sFileName = \'/Users/miltonandrews/Proportion_Teller/Input_Files/User_Response_File.csv\';\n')
+    # ppt_html_file.write('var a2 = document.getElementById("download_button");\n')
+    # ppt_html_file.write('a2.href = URL.createObjectURL(data);\n')
 
-    ppt_html_file.write('let fileHandle;\n')
-    ppt_html_file.write('document.querySelector(\".html\").onclick = async () = > {\n')
-    ppt_html_file.write('[fileHandle] = await window.showOpenFilePicker();\n')
+    ppt_html_file.write('let newLink = document.createElement(\"a2\");\n')
+    ppt_html_file.write('newLink.download = sFileName;\n')
 
-    ppt_html_file.write('const file = await fileHandle.getFile();\n')
-    ppt_html_file.write('const content = await file.text();\n')
+    ppt_html_file.write('if (window.webkitURL != null) {\n')
+    ppt_html_file.write('newLink.href = window.webkitURL.createObjectURL(textToBLOB);\n')
+    ppt_html_file.write('}\n')
+    ppt_html_file.write('else {\n')
+    ppt_html_file.write('newLink.href=window.URL.createObjectURL(textToBLOB);\n')
+    ppt_html_file.write('newLink.style.display = \"none\";\n')
+    ppt_html_file.write('document.body.appendChild(newLink);\n')
+    ppt_html_file.write('}\n')
+    ppt_html_file.write('newLink.click();\n')
 
-    ppt_html_file.write('return content;\n')
-    ppt_html_file.write('};\n')
+    # ppt_html_file.write('let fileHandle;\n')
+    # ppt_html_file.write('document.querySelector(\".html\").onclick = async () = > {\n')
+    # ppt_html_file.write('[fileHandle] = await window.showOpenFilePicker();\n')
+
+    # ppt_html_file.write('const file = await fileHandle.getFile();\n')
+    # ppt_html_file.write('const content = await file.text();\n')
+
+    # ppt_html_file.write('return content;\n')
+    # ppt_html_file.write('};\n')
 
 
-    ppt_html_file.write('} / *END OF FUNCTION * /\n')
+    ppt_html_file.write('}\n')
 
     ppt_html_file.write('</script>\n')
 
-    ppt_html_file.write('<a id = \"download_button\" download = \"Download.csv\" type = \"text/csv\" > Download CSV </a>\n')
+    # ppt_html_file.write('<a id = \"download_button\" download = \"Download.csv\" type = \"text/csv\" > Download CSV </a>\n')
 
     # ppt_html_file.write('const amino_acids = []\n')
 
@@ -204,78 +230,3 @@ def build_html_page():
     ppt_html_file.write('</html>\n')
 
     return()
-
-"""
-
-    # ppt_html_file.write('const x = document.getElementById(\"submit\")\n')
-
-    var amino_acids = \"\";\n')
-
-
-
-
-
-
-    ppt_html_file.write('</script>\n')
-
-    <script>
-
-    var  e = document.getElementById("ptm-reaction");
-    var value = e.value;
-    var ptm_reaction_type = e.options[e.selectedIndex].text;
-
-    var e = document.getElementById("modification_type");
-    var value = e.value;
-    var modification_type = e.options[e.selectedIndex].text;
-
-    var e = document.getElementById("amino_side_location");
-    var value = e.value;
-    var amino_side_location = e.options[e.selectedIndex].text;
-
-    var e = document.getElementById("carboxyl_side_location");
-    var value = e.value;
-    var carboxyl_side_location = e.options[e.selectedIndex].text;
-
-    document.getElementById("submit").innerHTML +=
-    amino_acids + "," + ptm_reaction_type + "," + modification_type + "," + amino_side_location + "," + carboxyl_side_location;
-
-    total_csv_data = amino_acids + "," + ptm_reaction_type + "," + modification_type + "," + amino_side_location + "," + carboxyl_side_location;
-
-    var csv = total_csv_data;
-    var data = new Blob([csv]);
-    var a2 = document.getElementById("download_button");
-    a2.href = URL.createObjectURL(data);
-
-    / *
-    let f = new File([res], 'myFile.txt', {type: 'text/plain'});
-    console.log(f);
-
-    let
-    url = (f);
-    console.log(url)
-
-    let
-    a = document.createElement('a')
-    console.log(a)
-
-    a.href = url;
-    a.download = f.name;
-    a.textContent = `Download ${f.name}
-    `;
-    document.querySelector('main').append(a);
-    * /
-
-    } / *END OF FUNCTION * /
-
-    < / script >
-
-        < a
-    id = "download_button"
-    download = "Download.csv"
-    type = "text/csv" > Download
-    CSV < / a >
-
-            < / body >
-
-                < / html >
-"""
