@@ -138,6 +138,13 @@ with open(fasta_file) as csv_file:
             total_pairs += 1
 
 for i in range(0,19):
-    print(frequency_matrix[i])
-print(total_pairs)
+    for j in range(0,19):
+        frequency_matrix[i][j] = (frequency_matrix[i][j] / total_pairs) * 100
+
+
+for i in range(19):
+    for j in range(19):
+        if frequency_matrix[i][j] > 0.5:
+            print("%1.2f" % frequency_matrix[i][j])
+# print(total_pairs)
 
