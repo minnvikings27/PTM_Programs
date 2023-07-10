@@ -45,6 +45,8 @@ def build_html_page():
     ppt_html_page = proportion_teller_html_path + 'Proportion_Teller_User_Input.html'
     ppt_html_file = open(ppt_html_page, 'w')
 
+    # ***************** Web Page Code Begins Here *****************
+
     ppt_html_file.write('<html>\n')
     ppt_html_file.write('<head>\n')
     ppt_html_file.write('<title>  Proportion Teller </title>\n')
@@ -142,6 +144,11 @@ def build_html_page():
 
     ppt_html_file.write('</div>\n')
 
+
+
+
+    # ***************** Java script coding begins here *****************
+
     ppt_html_file.write('<script>\n')
 
     # ppt_html_file.write('const x = document.getElementById(\"submit\")\n')
@@ -186,8 +193,12 @@ def build_html_page():
     ppt_html_file.write('total_csv_data = amino_acids + \",\" + ptm_reaction_type + \",\" + ptm_modifier + \",\" + amino_side_location + \",\" + a_score_cutoff + \",\" + carboxyl_side_location;\n')
     ppt_html_file.write('var csv = total_csv_data;\n')
 
+    ppt_html_file.write('const link = document.createElement(\"a\");')
     ppt_html_file.write('const textToBLOB = new Blob([csv], {type:\'text/plain\'});\n')
-    ppt_html_file.write('const sFileName = \'/Users/miltonandrews/Proportion_Teller/Input_Files/User_Response_File.csv\';\n')
+    ppt_html_file.write('link.href = URL.createObjectURL(textToBLOB);')
+    ppt_html_file.write('link.download = \'/Users/miltonandrews/Proportion_Teller/Input_Files/User_Response_File.csv\';\n')
+    ppt_html_file.write('link.click();')
+    ppt_html_file.write('URL.revokeObjectURL(link.href);')
     # ppt_html_file.write('var a2 = document.getElementById("download_button");\n')
     # ppt_html_file.write('a2.href = URL.createObjectURL(data);\n')
 
