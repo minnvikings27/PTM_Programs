@@ -1,4 +1,3 @@
-
 def gather_user_input():
 
     # import customtkinter
