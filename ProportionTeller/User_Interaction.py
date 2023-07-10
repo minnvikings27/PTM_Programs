@@ -3,6 +3,7 @@ def gather_user_input():
 
     # import customtkinter
 
+
     modification_type = ['Phosphorylation (STY)', 'Oxidation (M)', 'Carbamidomethylation', 'Deamidation (NQ)',
                          'Acetylation (Protein N-term)', 'Pyro-glu from Q-Q']
 

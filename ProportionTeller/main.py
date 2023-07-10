@@ -39,6 +39,7 @@ total_modified_central_aas = 0
 Number_of_PTMs = 0
 modified_aa_location = 0
 
+
 prior_protein_accession_number = ''
 protein_accession_number = ''
 capture_all_ptms_in_line = ''

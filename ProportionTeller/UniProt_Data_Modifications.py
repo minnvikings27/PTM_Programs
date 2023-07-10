@@ -5,6 +5,7 @@ def trypsinize_uniprot_string(requested_aa):
     # This function uses FASTA data that was already pulled down from the UniProt database and does an artificial
     # trypsin cleavage at the carboxylic end of whenever lysine or arginine residue is encounters.
 
+
     import csv
     import os
 

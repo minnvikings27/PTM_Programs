@@ -2,6 +2,7 @@ amino_acids_list = ['Tyrosine', 'Serine', 'Threonine', 'Alanine', 'Arginine', 'A
                     'Cysteine', 'Glutamate', 'Glutamine', 'Glycine', 'Histidine', 'Isoleucine', 'Leucine',
                     'Lysine', 'Methionine', 'Phenylalanine', 'Proline', 'Tryptophan', 'Valine']
 
+
 amino_acids_one_letter_list = ['Y', 'S', 'T', 'A', 'R', 'N', 'D', 'C', 'E', 'Q', 'G', 'H', 'I', 'L', 'K',
                                'M', 'F', 'P', 'W', 'V']
 

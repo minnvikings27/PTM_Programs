@@ -3,6 +3,7 @@ def gather_ptm_reactions():
     import csv
     import os
 
+
     ptm_mod_type = []
     string_segment_1 = []
     string_segment_2 = []
