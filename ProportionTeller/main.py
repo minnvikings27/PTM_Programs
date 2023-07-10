@@ -477,6 +477,7 @@ for m in range(0, requested_peptide_amino_end_start):
         #    UniProt_Trypsinized_Probability_Matrix[n][m] = 0.00001
         Bayesian_Probability_Matrix[n][m] = \
         ((Lab_Assay_Trypsinized_Probability_Matrix[n][m] * probability_central_aa_is_modified)/UniProt_Trypsinized_Probability_Matrix[n][m])
+        Bayesian_Probability_Matrix[n][m] = Bayesian_Probability_Matrix[n][m]
 for m in range(requested_peptide_amino_end_start + 1, matrix_width):
     for n in range(0, 20):
         # if UniProt_Trypsinized_Probability_Matrix[n][m] == 0:
