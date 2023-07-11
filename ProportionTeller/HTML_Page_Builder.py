@@ -226,7 +226,6 @@ def build_html_page():
     # ppt_html_file.write('return content;\n')
     # ppt_html_file.write('};\n')
 
-
     ppt_html_file.write('}\n')
 
     ppt_html_file.write('</script>\n')

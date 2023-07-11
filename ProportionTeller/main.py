@@ -487,6 +487,7 @@ for m in range(requested_peptide_amino_end_start + 1, matrix_width):
         ((Lab_Assay_Trypsinized_Probability_Matrix[n][m] *
             probability_central_aa_is_modified)/UniProt_Trypsinized_Probability_Matrix[n][m])
 
+
 max_bayesian_value = np.amax(Bayesian_Probability_Matrix)
 
 graph_title = 'Bayesian Prob Matrix for Trypsinized Peptide - Using ' + requested_kinase + ' With ' + ptm_name + ' of ' + requested_aa

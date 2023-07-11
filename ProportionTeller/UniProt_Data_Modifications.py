@@ -184,6 +184,7 @@ def determine_uniprot_aa_placement(AA_list, input_file, central_aa, requested_pe
 
     central_aa_count = 0
 
+
     with open(input_file) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         for row in csv_reader:

@@ -143,9 +143,7 @@ def parse_peaks_peptide(input_file, requested_aa, requested_peptide_amino_end_st
                             PTM_AA_location = ''
 
                 raw_sequence_counter = 0
-
                 peptide_sequence = ''
-
             header = False
 
         peptide_sequence = ''
