@@ -12,7 +12,7 @@ def trypsinize_uniprot_string(requested_aa):
     in_silico_peptide = ''
     requested_aa_found_in_peptide = False
 
-    home_directory = os.path.expanduser('~') + '/Proportion_Teller'
+    home_directory = os.path.expanduser('~') + '/ProportionTeller'
 
     reference_path = home_directory + '/Reference_Files/'
 
@@ -54,56 +54,49 @@ def trypsinize_uniprot_string(requested_aa):
     return(trypsinized_fasta_file)
 
 
-def create_accession_numbers_file(input_file):
+def create_accession_numbers_file(ProportionTeller_working_directory):
 
     import csv
-    import os
+    # import os
 
-    list_of_all_files_in_dir = []
-    valid_csv_files = []
-    current_file_name = ''
-
-
+    # list_of_all_files_in_dir = []
+    # valid_csv_files = []
+    # current_file_name = ''
 
     prior_protein_accession_number = ''
 
-    home_directory = os.path.expanduser('~') + '/Proportion_Teller'
-
-    input_path = home_directory + '/Input_Files/'
-
-    output_path = home_directory + '/Output_Files/'
-
-    output_accession_numbers_file = output_path + '/Protein_Accession_Numbers.csv'
+    output_accession_numbers_file = ProportionTeller_working_directory + '/Protein_Accession_Numbers.csv'
 
     unique_protein_accession_numbers = open(output_accession_numbers_file, 'w')
 
-    list_of_all_files_in_dir = os.listdir(input_path)
+    # list_of_all_files_in_dir = os.listdir(input_path)
 
-    for i in range(0, len(list_of_all_files_in_dir)):
-        current_file_name = list_of_all_files_in_dir[i]
-        if current_file_name[-4] == '.' and current_file_name[-3] == 'c' and current_file_name[-2] == 's' and current_file_name[-1] == 'v':
-            valid_csv_files.append(current_file_name)
+    # for i in range(0, len(list_of_all_files_in_dir)):
+    #     current_file_name = list_of_all_files_in_dir[i]
+    #     if current_file_name[-4] == '.' and current_file_name[-3] == 'c' and current_file_name[-2] == 's' and current_file_name[-1] == 'v':
+    #         valid_csv_files.append(current_file_name)
 
-    for i in range(0, len(valid_csv_files)):
-        input_file = input_path + '/' + valid_csv_files[i]
+    #for i in range(0, len(valid_csv_files)):
 
+    input_file = ProportionTeller_working_directory + '/Unmatched_Post_Control_Filter_File.csv'
 
+        # input_file = working_directory + '/' + valid_csv_files[i]
 
-        with open(input_file) as csv_file:
-            csv_reader = csv.reader(csv_file, delimiter=',')
-            for row in csv_reader:
-                protein_accession_full = row[2].split('|')
-                if protein_accession_full[0] == 'tr' or protein_accession_full[0] == 'sp':
-                    protein_accession_number = protein_accession_full[1]
-                else:
-                    protein_accession_number = protein_accession_full[0]
-                if protein_accession_number != prior_protein_accession_number:
-                    unique_protein_accession_numbers.write(protein_accession_number)
-                    unique_protein_accession_numbers.write('\n')
-                    prior_protein_accession_number = protein_accession_number
-                print(protein_accession_number)
+    with open(input_file) as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',')
+        for row in csv_reader:
+            protein_accession_full = row[2].split('|')
+            if protein_accession_full[0] == 'tr' or protein_accession_full[0] == 'sp':
+                protein_accession_number = protein_accession_full[1]
+            else:
+                protein_accession_number = protein_accession_full[0]
+            if protein_accession_number != prior_protein_accession_number:
+                unique_protein_accession_numbers.write(protein_accession_number)
+                unique_protein_accession_numbers.write('\n')
+                prior_protein_accession_number = protein_accession_number
+            print(protein_accession_number)
 
-        unique_protein_accession_numbers.close()
+    unique_protein_accession_numbers.close()
 
     return output_accession_numbers_file
 
@@ -120,7 +113,7 @@ def modify_fasta_reference_file(accession_numbers_file):
 
     home_directory = os.path.expanduser('~')
 
-    reference_file_path = home_directory + '/Proportion_Teller/Reference_Files'
+    reference_file_path = home_directory + '/ProportionTeller/Reference_Files'
 
     output_accession_numbers_file = reference_file_path + '/Unique_Protein_Accession_Numbers.csv'
 
@@ -130,7 +123,7 @@ def modify_fasta_reference_file(accession_numbers_file):
 
     home_directory = os.path.expanduser('~')
 
-    reference_file_path = home_directory + '/Proportion_Teller/Reference_Files'
+    reference_file_path = home_directory + '/ProportionTeller/Reference_Files'
 
     fasta_file = reference_file_path + '/FASTA_File.csv'
 

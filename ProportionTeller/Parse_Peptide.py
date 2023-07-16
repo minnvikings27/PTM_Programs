@@ -18,7 +18,7 @@ def parse_peaks_peptide(input_file, requested_aa, requested_peptide_amino_end_st
     #   Start of section that looks for the directory ~/PortionTeller (where ~ stands for the home directory)
     #   and if it can't find that home directory then it will create it.
     home_directory = os.path.expanduser('~')
-    proportionteller_home_path = home_directory + '/Proportion_Teller'
+    proportionteller_home_path = home_directory + '/ProportionTeller'
 
     if os.path.exists(proportionteller_home_path) is False:
         print('Making PortionTeller directory')
@@ -37,7 +37,7 @@ def parse_peaks_peptide(input_file, requested_aa, requested_peptide_amino_end_st
     SERIOHL_KILR_output_file = open(proportionteller_output_path + '/SERIOHL_KILR_output_file.csv', 'w')
 
 
-    input_file = '/Users/miltonandrews/Proportion_Teller/Input_Files/ABL_PLUS_R1_protein-peptides.csv'
+    input_file = '/Users/miltonandrews/ProportionTeller/Input_Files/ABL_PLUS_R1_protein-peptides.csv'
 
     with open(input_file, 'r') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')

@@ -21,7 +21,7 @@ def build_html_page():
 
     ptm_modifiers = []
 
-    home_directory = os.path.expanduser('~') + '/Proportion_Teller'
+    home_directory = os.path.expanduser('~') + '/ProportionTeller'
 
     input_path = home_directory + '/Input_Files/'
 
@@ -197,7 +197,7 @@ def build_html_page():
     ppt_html_file.write('const link = document.createElement(\"a\");')
     ppt_html_file.write('const textToBLOB = new Blob([csv], {type:\'text/plain\'});\n')
     ppt_html_file.write('link.href = URL.createObjectURL(textToBLOB);')
-    ppt_html_file.write('link.download = \'/Users/miltonandrews/Proportion_Teller/Input_Files/User_Response_File.csv\';\n')
+    ppt_html_file.write('link.download = \'/Users/miltonandrews/ProportionTeller/Input_Files/User_Response_File.csv\';\n')
     ppt_html_file.write('link.click();')
     ppt_html_file.write('URL.revokeObjectURL(link.href);')
     # ppt_html_file.write('var a2 = document.getElementById("download_button");\n')
