@@ -1,6 +1,6 @@
 total_AA_in_UniProt_Data = [0]
 
-def trypsinize_uniprot_string(requested_aa):
+def Trypsinize_uniprot_string(requested_aa):
 
     # This function uses FASTA data that was already pulled down from the UniProt database and does an artificial
     # trypsin cleavage at the carboxylic end of whenever lysine or arginine residue is encounters.
@@ -12,11 +12,11 @@ def trypsinize_uniprot_string(requested_aa):
     in_silico_peptide = ''
     requested_aa_found_in_peptide = False
 
-    home_directory = os.path.expanduser('~') + '/ProportionTeller'
+    home_directory = os.path.expanduser('~') + '/ProportionTeller/'
 
-    reference_path = home_directory + '/Reference_Files/'
+    reference_path = home_directory + 'Reference_files_directory/'
 
-    output_path = home_directory + '/Output_Files/'
+    output_path = home_directory + 'Output_directory/'
 
     FASTA_File = reference_path + 'FASTA_File.csv'
 
@@ -54,7 +54,7 @@ def trypsinize_uniprot_string(requested_aa):
     return(trypsinized_fasta_file)
 
 
-def create_accession_numbers_file(ProportionTeller_working_directory):
+def Create_accession_numbers_file(ProportionTeller_working_directory):
 
     import csv
     # import os
@@ -94,14 +94,14 @@ def create_accession_numbers_file(ProportionTeller_working_directory):
                 unique_protein_accession_numbers.write(protein_accession_number)
                 unique_protein_accession_numbers.write('\n')
                 prior_protein_accession_number = protein_accession_number
-            print(protein_accession_number)
+            # print(protein_accession_number)
 
     unique_protein_accession_numbers.close()
 
     return output_accession_numbers_file
 
 
-def modify_fasta_reference_file(accession_numbers_file):
+def Modify_fasta_reference_file(accession_numbers_file):
 
     import requests
     import csv
@@ -113,7 +113,7 @@ def modify_fasta_reference_file(accession_numbers_file):
 
     home_directory = os.path.expanduser('~')
 
-    reference_file_path = home_directory + '/ProportionTeller/Reference_Files'
+    reference_file_path = home_directory + '/ProportionTeller/Reference_files_directory'
 
     output_accession_numbers_file = reference_file_path + '/Unique_Protein_Accession_Numbers.csv'
 
@@ -123,7 +123,7 @@ def modify_fasta_reference_file(accession_numbers_file):
 
     home_directory = os.path.expanduser('~')
 
-    reference_file_path = home_directory + '/ProportionTeller/Reference_Files'
+    reference_file_path = home_directory + '/ProportionTeller/Reference_files_directory'
 
     fasta_file = reference_file_path + '/FASTA_File.csv'
 
@@ -137,7 +137,7 @@ def modify_fasta_reference_file(accession_numbers_file):
     with open(accession_numbers_file, 'r') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         for row in csv_reader:
-            print(row)
+            # print(row)
             protein_accession_number = row[0]
             if protein_accession_number not in fasta_dictionary:
                 uniprot_request_url = "http://www.uniprot.org/uniprot/"
@@ -159,7 +159,7 @@ def modify_fasta_reference_file(accession_numbers_file):
     return fasta_file
 
 
-def determine_uniprot_aa_placement(AA_list, input_file, central_aa, requested_peptide_amino_end_start,
+def Determine_uniprot_aa_placement(AA_list, input_file, central_aa, requested_peptide_amino_end_start,
     requested_peptide_carboxyl_end_finish):
 
     import csv

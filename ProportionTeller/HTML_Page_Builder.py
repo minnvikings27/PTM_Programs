@@ -7,7 +7,7 @@ amino_acids_one_letter_list = ['Y', 'S', 'T', 'A', 'R', 'N', 'D', 'C', 'E', 'Q',
                                'M', 'F', 'P', 'W', 'V']
 
 
-def build_html_page():
+def Build_html_page():
 
     import os
     from get_modification_types import gather_ptm_reactions
@@ -19,19 +19,19 @@ def build_html_page():
 
     # current_ptm = []
 
-    ptm_modifiers = []
+    Ptm_modifiers = []
 
-    home_directory = os.path.expanduser('~') + '/ProportionTeller'
+    Home_directory = os.path.expanduser('~') + '/ProportionTeller/'
 
-    input_path = home_directory + '/Input_Files/'
+    Working_directory = Home_directory + 'Working_Directory/'
 
-    ptm_modifier_file = input_path + 'PTM_Modifiers.txt'
+    Input_directory = Home_directory + 'Input_Directory/'
 
-    proportion_teller_html_path = home_directory + '/HTML_Files/'
+    Ptm_modifier_file = Input_directory + 'PTM_Modifiers.txt'
 
-    ptm_reactions = gather_ptm_reactions()
+    Ptm_reactions = gather_ptm_reactions()
 
-    with open(ptm_modifier_file) as f:
+    with open(Ptm_modifier_file) as f:
         ptm_modifier_input = f.readlines()
 
     # remove new line characters
@@ -40,10 +40,10 @@ def build_html_page():
     for i in range (0, len(ptm_modifier_input)):
         current_ptm = ptm_modifier_input[i]
         if current_ptm[0] != '#':
-            ptm_modifiers.append(ptm_modifier_input[i])
+            Ptm_modifiers.append(ptm_modifier_input[i])
     # print(ptm_modifiers)
 
-    ppt_html_page = proportion_teller_html_path + 'Proportion_Teller_User_Input.html'
+    ppt_html_page = Working_directory + 'Html_input_page.html'
     ppt_html_file = open(ppt_html_page, 'w')
 
     # ***************** Web Page Code Begins Here *****************
@@ -79,10 +79,10 @@ def build_html_page():
     ppt_html_file.write('</div>\n')
     ppt_html_file.write('<label> PTM Reaction(s) </label> <br>\n')
 
-    for i in range(0,len(ptm_reactions)):
-        ppt_html_file.write('<input type = \"checkbox\" id = \"' + ptm_reactions[i] + '\" name = \"' +
-                            ptm_reactions[i] + '\" value = \"' + ptm_reactions[i] + '\">\n')
-        ppt_html_file.write('<label for=\"' + ptm_reactions[i] + '\">' + ptm_reactions[i] + '</label>\n')
+    for i in range(0,len(Ptm_reactions)):
+        ppt_html_file.write('<input type = \"checkbox\" id = \"' + Ptm_reactions[i] + '\" name = \"' +
+                            Ptm_reactions[i] + '\" value = \"' + Ptm_reactions[i] + '\">\n')
+        ppt_html_file.write('<label for=\"' + Ptm_reactions[i] + '\">' + Ptm_reactions[i] + '</label>\n')
         ppt_html_file.write('<br>\n')
 
 
@@ -126,8 +126,8 @@ def build_html_page():
     ppt_html_file.write('<label for=\"ptm_modifier\"> PTM Modifier:</label>\n')
     ppt_html_file.write('<select name = \"ptm_modifier\" id=\"ptm_modifier\">\n')
 
-    for i in range(0,len(ptm_modifiers)):
-        ppt_html_file.write('<option value = \"' + ptm_modifiers[i] + '\">' + ptm_modifiers[i] + '</option>\n')
+    for i in range(0,len(Ptm_modifiers)):
+        ppt_html_file.write('<option value = \"' + Ptm_modifiers[i] + '\">' + Ptm_modifiers[i] + '</option>\n')
     ppt_html_file.write('</select>\n')
 
     ppt_html_file.write('</body>\n')
@@ -145,9 +145,6 @@ def build_html_page():
 
     ppt_html_file.write('</div>\n')
 
-
-
-
     # ***************** Java script coding begins here *****************
 
     ppt_html_file.write('<script>\n')
@@ -161,15 +158,16 @@ def build_html_page():
     ppt_html_file.write('let saveFile = () => {\n')
 
     ppt_html_file.write('var amino_acids = \"\";\n')
+
     for i in range (0, len(amino_acids_list)):
         ppt_html_file.write('if (document.getElementById(\"' + amino_acids_list[i] + '\").checked === true) {\n')
         ppt_html_file.write('amino_acids = amino_acids + \"' + amino_acids_one_letter_list[i] + '\";\n')
         ppt_html_file.write('}\n')
 
     ppt_html_file.write('var ptm_reaction_type = \"\";\n')
-    for i in range(0,len(ptm_reactions)):
-        ppt_html_file.write('if (document.getElementById(\"' + ptm_reactions[i] + '\").checked === true) {\n')
-        ppt_html_file.write('ptm_reaction_type = ptm_reaction_type + \"' + ptm_reactions[i] + '\";\n')
+    for i in range(0,len(Ptm_reactions)):
+        ppt_html_file.write('if (document.getElementById(\"' + Ptm_reactions[i] + '\").checked === true) {\n')
+        ppt_html_file.write('ptm_reaction_type = ptm_reaction_type + \"' + Ptm_reactions[i] + '\";\n')
         ppt_html_file.write('}\n')
 
     ppt_html_file.write('var e = document.getElementById(\"amino_side_location\");\n')
@@ -197,7 +195,7 @@ def build_html_page():
     ppt_html_file.write('const link = document.createElement(\"a\");')
     ppt_html_file.write('const textToBLOB = new Blob([csv], {type:\'text/plain\'});\n')
     ppt_html_file.write('link.href = URL.createObjectURL(textToBLOB);')
-    ppt_html_file.write('link.download = \'/Users/miltonandrews/ProportionTeller/Input_Files/User_Response_File.csv\';\n')
+    ppt_html_file.write('link.download = \'/Users/miltonandrews/ProportionTeller/Input_directory/User_Response_File.csv\';\n')
     ppt_html_file.write('link.click();')
     ppt_html_file.write('URL.revokeObjectURL(link.href);')
     # ppt_html_file.write('var a2 = document.getElementById("download_button");\n')

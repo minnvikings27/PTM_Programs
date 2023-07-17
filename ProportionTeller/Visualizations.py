@@ -3,7 +3,7 @@ import seaborn as sns
 import matplotlib.pylab as plt
 import pandas as pd
 
-def generate_heatmap(heatmap_input_array, graph_max, graph_font, graph_title, graph_x_axis_label, graph_y_axis_label):
+def Generate_heatmap(heatmap_input_array, graph_max, graph_font, graph_title, graph_x_axis_label, graph_y_axis_label):
 
     df_cm = pd.DataFrame(heatmap_input_array, columns = [i for i in graph_x_axis_label])
 

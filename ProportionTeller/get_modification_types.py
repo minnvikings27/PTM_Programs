@@ -10,7 +10,7 @@ def gather_ptm_reactions():
     header = True
 
     home_directory = os.path.expanduser('~') + '/ProportionTeller'
-    peaks_file = home_directory + '/Input_Files/Experimental.csv'
+    peaks_file = home_directory + '/Input_directory/Experimental.csv'
 
     with open(peaks_file) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')

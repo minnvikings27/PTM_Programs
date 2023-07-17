@@ -1,4 +1,4 @@
-def parse_peaks_peptide(input_file, requested_aa, requested_peptide_amino_end_start,
+def Parse_peaks_peptide(input_file, requested_aa, requested_peptide_amino_end_start,
                         requested_peptide_carboxyl_end_finish, requested_analysis_type):
 
     import csv
@@ -21,10 +21,9 @@ def parse_peaks_peptide(input_file, requested_aa, requested_peptide_amino_end_st
     proportionteller_home_path = home_directory + '/ProportionTeller'
 
     if os.path.exists(proportionteller_home_path) is False:
-        print('Making PortionTeller directory')
         os.mkdir(proportionteller_home_path)
 
-    proportionteller_output_path = proportionteller_home_path + '/Output_Files'
+    proportionteller_output_path = proportionteller_home_path + '/Output_directory'
 
     if os.path.exists(proportionteller_output_path) is False:
         os.mkdir(proportionteller_output_path)
@@ -37,7 +36,7 @@ def parse_peaks_peptide(input_file, requested_aa, requested_peptide_amino_end_st
     SERIOHL_KILR_output_file = open(proportionteller_output_path + '/SERIOHL_KILR_output_file.csv', 'w')
 
 
-    input_file = '/Users/miltonandrews/ProportionTeller/Input_Files/ABL_PLUS_R1_protein-peptides.csv'
+    input_file = '/Users/miltonandrews/ProportionTeller/Working_directory/Unmatched_Post_Control_Filter_File.csv'
 
     with open(input_file, 'r') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
