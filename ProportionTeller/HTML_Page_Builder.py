@@ -1,3 +1,5 @@
+# HTML_Page_Builder.py
+
 amino_acids_list = ['Tyrosine', 'Serine', 'Threonine', 'Alanine', 'Arginine', 'Asparagine', 'Aspartate',
                     'Cysteine', 'Glutamate', 'Glutamine', 'Glycine', 'Histidine', 'Isoleucine', 'Leucine',
                     'Lysine', 'Methionine', 'Phenylalanine', 'Proline', 'Tryptophan', 'Valine']

@@ -1,3 +1,5 @@
+# Visualizations.py
+
 import numpy as np
 import seaborn as sns
 import matplotlib.pylab as plt

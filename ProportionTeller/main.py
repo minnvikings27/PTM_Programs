@@ -1,3 +1,5 @@
+# main.py
+
 import csv
 import numpy as np
 import os
@@ -51,7 +53,7 @@ AA_by_volume_list = ['G', 'A', 'S', 'C', 'T', 'D', 'P', 'N', 'V', 'E', 'Q', 'H',
 # By pKa
 AA_by_pKa_list = ['D', 'E', 'H', 'A', 'N', 'Q', 'G', 'I', 'L', 'M', 'F', 'P', 'S', 'T', 'W', 'V', 'C', 'K', 'Y', 'R']
 
-AA_list  = AA_by_pKa_list
+AA_list  = AA_alpha_list
 
 Header = True
 
@@ -150,7 +152,7 @@ Screened_peaks_file = Output_directory +'/Screened_PEAKS_File.csv'
 #CHANGE THESE WHEN FILE TRANSFER OF DATA IS COMPLETED
 Requested_peptide_amino_end_start = 4
 Requested_peptide_carboxyl_end_finish = 4
-Central_aa = 'Y'
+Central_aa = 'S'
 
 
 Matrix_width = Requested_peptide_amino_end_start + Requested_peptide_carboxyl_end_finish + 1
@@ -320,24 +322,26 @@ requested_peptide_amino_end_start_peptide_string = \
    Parse_peaks_peptide(Unmatched_post_control_filter_file, Requested_aa, Requested_peptide_amino_end_start,
                        Requested_peptide_carboxyl_end_finish, Requested_analysis_type)
 
-formatted_peptide_sequence = []
+print('From main:')
+print(requested_peptide_amino_end_start_peptide_string)
 
-input_file = '/Users/miltonandrews/desktop/Python_Output/pre_sorted_P35_R0_Trypsinized_Lab_Assay.csv'
+unsorted_formatted_aa_sequence = []
+
+input_file = Working_directory + 'Presorted_formatted_aa_sequences.csv'
 
 with open(input_file, 'r') as Csv_file:
    Csv_reader = csv.reader(Csv_file, delimiter=',')
    for Row in Csv_reader:
-       formatted_peptide_sequence.append(Row[1])
+       unsorted_formatted_aa_sequence.append(Row[1])
 
-formatted_peptide_sequence = [*set(formatted_peptide_sequence)]
+formatted_peptide_sequence = [*set(unsorted_formatted_aa_sequence)]
 
-output_file = '/Users/miltonandrews/desktop/Python_Output/CDK2_P25_Trypsinized_Lab_Assay.csv'
+output_file = Working_directory + 'Unsorted_formatted_aa_sequences.csv'
 
 with open(output_file, 'w') as Csv_file:
    for i in range(0, len(formatted_peptide_sequence)):
        Csv_file.write(formatted_peptide_sequence[i])
        Csv_file.write('\n')
-
 
 phosphorylation = False
 
@@ -370,15 +374,16 @@ phosphorylation = False
 # print("Number of Multiple PTMs = {}".format(str(Multiple_ptms_count)))
 # print("Percentage of Multiple PTMs = {0:.0%}".format(Multiple_ptms_count/line_count))
 
-Trypsinized_Lab_Assay_File = '/Users/miltonandrews/desktop/Python_Output/pre_sorted_Trypsinized_Lab_Assay.csv'
+Trypsinized_Lab_Assay_File = Working_directory + 'Presorted_formatted_aa_sequences.csv'
 
 Lab_Assay_Trypsinized_Matrix = Determine_uniprot_aa_placement(AA_list, Trypsinized_Lab_Assay_File, Requested_aa,
    Requested_peptide_amino_end_start, Requested_peptide_carboxyl_end_finish)
 
+for i in range(0,20):
+    print(Lab_Assay_Trypsinized_Matrix[i])
+
 max_lab_trypsinized_value = np.amax(Lab_Assay_Trypsinized_Matrix)
 
-graph_title = 'Lab Assay for Trypsinized Peptide - ' + ptm_name + ' of ' + Requested_aa + ' Using ' + Requested_kinase
-graph_max = max_lab_trypsinized_value
 # graph_max = 800
 Generate_heatmap(Lab_Assay_Trypsinized_Matrix, graph_max, Graph_font, graph_title, Graph_x_axis_label, Graph_y_axis_label)
 
@@ -411,7 +416,7 @@ with open(Trypsinized_assay_file) as Csv_file:
            if central_aa_total_search[i] == Requested_aa:
                Total_central_aas += 1
 
-with open('/Users/miltonandrews/desktop/Python_Output/pre_sorted_Trypsinized_Lab_Assay.csv') as Csv_file:
+with open(Working_directory + 'Presorted_formatted_aa_sequences.csv') as Csv_file:
    Csv_reader = csv.reader(Csv_file, delimiter=',')
    for Row in Csv_reader:
        central_aa_total_search = Row[1]

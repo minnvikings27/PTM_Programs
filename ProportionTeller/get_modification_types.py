@@ -1,3 +1,5 @@
+# get_modification_types.py
+
 def gather_ptm_reactions():
 
     import csv
@@ -9,8 +11,9 @@ def gather_ptm_reactions():
 
     header = True
 
-    home_directory = os.path.expanduser('~') + '/ProportionTeller'
-    peaks_file = home_directory + '/Input_directory/Experimental.csv'
+    Home_directory = os.path.expanduser('~') + '/ProportionTeller/'
+    Input_directory = Home_directory + 'Input_directory/'
+    peaks_file = Input_directory + 'Experimental.csv'
 
     with open(peaks_file) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')

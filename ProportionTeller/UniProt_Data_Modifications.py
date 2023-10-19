@@ -1,3 +1,5 @@
+# UniProt_Data_Modifications.py
+
 total_AA_in_UniProt_Data = [0]
 
 def Trypsinize_uniprot_string(requested_aa):
@@ -123,9 +125,9 @@ def Modify_fasta_reference_file(accession_numbers_file):
 
     home_directory = os.path.expanduser('~')
 
-    reference_file_path = home_directory + '/ProportionTeller/Reference_files_directory'
+    Reference_files_directory = home_directory + '/ProportionTeller/Reference_files_directory'
 
-    fasta_file = reference_file_path + '/FASTA_File.csv'
+    fasta_file = Reference_files_directory + '/FASTA_File.csv'
 
     fasta_dictionary = {"Accession": []}
 
