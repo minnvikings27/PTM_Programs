@@ -5,14 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="551c4ecc-a16c-4e07-8e19-bd27a40dc136" name="Changes" comment="  =">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HTML_Page_Builder.py" beforeDir="false" afterPath="$PROJECT_DIR$/HTML_Page_Builder.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Parse_Peptide.py" beforeDir="false" afterPath="$PROJECT_DIR$/Parse_Peptide.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Screen_Against_Control.py" beforeDir="false" afterPath="$PROJECT_DIR$/Screen_Against_Control.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UniProt_Data_Modifications.py" beforeDir="false" afterPath="$PROJECT_DIR$/UniProt_Data_Modifications.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Visualizations.py" beforeDir="false" afterPath="$PROJECT_DIR$/Visualizations.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/get_modification_types.py" beforeDir="false" afterPath="$PROJECT_DIR$/get_modification_types.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pythonProject/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/ProportionTeller.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ProportionTeller.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -138,7 +133,21 @@
       <option name="project" value="LOCAL" />
       <updated>1689604137093</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="  =">
+      <created>1697723689209</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1697723689209</updated>
+    </task>
+    <task id="LOCAL-00009" summary="  =">
+      <created>1697724348501</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1697724348501</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
