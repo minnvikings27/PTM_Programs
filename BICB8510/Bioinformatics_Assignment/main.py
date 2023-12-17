@@ -7,6 +7,9 @@ Stop_Sequence_3 = 'TGA'
 Current_Codon = ""
 Current_Amino_Acid = ""
 Stop_Codon = 0
+DNA_Sequence = ""
+Protein_Sequence = ""
+i = 0
 
 DNAsequenceX_file = open("/Users/miltonandrews/Downloads/DNAsequenceX.txt", "r")
 
@@ -28,7 +31,7 @@ index = DNA_String.find(promoter)
 #print(re.search(promoter, DNA_String))
 
 # Add 10 to index because assignment stipulates that DNA code begins 10 nucleotides after the promoter region ends
-index = index + 10
+index = index + 15
 
 print(index)
 
@@ -140,8 +143,30 @@ while Stop_Codon == 0:
     if (Current_Codon[0] == 'T' and Current_Codon[1] == 'G' and Current_Codon[2] == 'A'):
         Stop_Codon = 1
 
-    print( Current_Amino_Acid)
+    print(Current_Amino_Acid)
     print(Current_Codon)
+    Protein_Sequence = Protein_Sequence + Current_Amino_Acid
+    DNA_Sequence = DNA_Sequence + Current_Codon
 
 print(DNA_String)
 print(index)
+print(DNA_Sequence)
+print(Protein_Sequence)
+
+i = 1
+while i != (len(DNA_Sequence) + 1):
+    if (i % 70) == 0:
+        print()
+    else:
+        print(DNA_Sequence[i-1],end="")
+    i = i + 1
+
+print()
+
+i = 1
+while i != (len(Protein_Sequence) + 1):
+    if (i % 70) == 0:
+        print()
+    else:
+        print(Protein_Sequence[i-1],end="")
+    i = i + 1

@@ -19,7 +19,11 @@ DNAstring = ""
 
 DNAsequenceX_file = open("/Users/miltonandrews/Downloads/DNAsequenceX.txt", "r")
 
-line  = DNAsequenceX_file.readline()
+#  By including this line from the FASTA file here, the first liner is being skipped
+#  (don't want it in the DNA search string)
+import re
+
+DNAsequenceX_file.readline()
 
 while DNAsequenceX_file:
     line  = DNAsequenceX_file.readline().replace('\n', '')
@@ -28,9 +32,10 @@ while DNAsequenceX_file:
     DNAstring = DNAstring + line
 DNAsequenceX_file.close()
 
-promoter = "TATAA"
+promoter = 'TATAAA'
 
-index = DNAstring.find(promoter)
+index = re.findall(promoter, DNAstring)
+#print(re.search(promoter, DNAstring))
 
 print(DNAstring)
 print(index)
